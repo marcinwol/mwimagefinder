@@ -19,9 +19,12 @@
 #include <boost/format.hpp>
 
 
+#include "infix_iterator.h"
+
+
 using namespace std;
 
-int main()
+int main(int ac, char* av[])
 {
 
     unique_ptr<int> ip = make_unique<int>(3);

@@ -10,4 +10,5 @@ TEMPLATE = lib
 TARGET = myapp
 
 SOURCES += myclass.cpp
-HEADERS += myclass.h
+HEADERS += myclass.h \
+    infix_iterator.h
