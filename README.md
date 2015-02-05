@@ -1,3 +1,4 @@
-qtcreator-project-structure
+mwimagefinder
 ===========================
-Code as described in this guide: http://dragly.org/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests/
+Program for search image files in a folder and its subfolders. The result of the program is a csv file with found files and their
+basic properties.
