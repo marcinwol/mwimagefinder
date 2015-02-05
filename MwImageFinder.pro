@@ -1,5 +1,7 @@
 TEMPLATE = subdirs
-CONFIG+=ordered
+
+CONFIG += ordered
+
 SUBDIRS = \
     src \
     app
