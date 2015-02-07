@@ -9,6 +9,10 @@ TEMPLATE = lib
 
 TARGET = myapp
 
-SOURCES += myclass.cpp
+SOURCES += myclass.cpp \
+    programoptions.cpp
+
 HEADERS += myclass.h \
-    infix_iterator.h
+    infix_iterator.h \
+    utils.h \
+    programoptions.h

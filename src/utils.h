@@ -22,7 +22,7 @@ namespace  mw {
   template <typename T>
   inline void errp(const T & msg)
   {
-      std::cout << "\033[1;31m" << mgs <<"\033[0m" << std::endl;
+      std::cout << "\033[1;31m" << msg <<"\033[0m" << std::endl;
   }
 
   /**

@@ -19,17 +19,25 @@
 #include <boost/format.hpp>
 
 
-#include "infix_iterator.h"
+#include "utils.h"
+#include "programoptions.h"
 
 
 using namespace std;
 
+
+
+
+
 int main(int ac, char* av[])
 {
 
-    unique_ptr<int> ip = make_unique<int>(3);
+    mw::ProgramOptions progOptions(ac, av);
+
+    if (!progOptions.parse_options()) {
+        return 1;
+    }
 
 
-    cout << "testigng: "<< *ip << endl;
     return 0;
 }
