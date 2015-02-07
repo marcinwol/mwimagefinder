@@ -32,10 +32,21 @@ namespace mw {
 
     public:
       ProgramOptions() = delete;
-      ProgramOptions(int acc, char *avv[]);
+      ProgramOptions(int acc, char *avv[]);            
 
       bool parse_options();
       void print(ostream & os);
+
+      template<typename T>
+      T get(const string & op_name)
+      {
+          T op_value {};
+          if (!vm.count(op_name)) {
+              return op_value;
+          }
+
+          return vm[op_name].as<T>();
+      }
 
       virtual ~ProgramOptions();
 

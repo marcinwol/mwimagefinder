@@ -38,6 +38,10 @@ int main(int ac, char* av[])
         return 1;
     }
 
+    string IN_DIR = progOptions.get<string>("in-dir");
+
+    cout << "In-dir: " <<IN_DIR << endl;
+
 
     return 0;
 }
