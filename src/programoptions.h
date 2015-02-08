@@ -38,6 +38,7 @@ namespace mw {
       virtual ~ProgramOptions();
 
     protected:
+      virtual void show_help();
       virtual void add_options() = 0;
       virtual void add_description() = 0;
 

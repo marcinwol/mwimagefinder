@@ -34,7 +34,8 @@ namespace mw {
      void ImageFinderOptions::add_options()
         {
             po->add_options()
-                ("help,h", "produce help message")
+                ("help,h", value<bool>()->implicit_value(true),
+                          "produce help message")
                 ("in-dir,I",  value<string>(), "input folder")
                 ("out-dir,O", value<string>(), "output folder")
                 ("file-type,T", value<string>(),

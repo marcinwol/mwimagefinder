@@ -41,6 +41,12 @@ namespace mw {
                   .options(*po).positional(*p).run(), vm);
 
          notify(vm);
+
+         if (get<bool>("help")) {
+             show_help();
+             return false;
+         }
+
      } catch  (const error & e) {
          mw::errp(e.what());
          print(cout);
@@ -48,6 +54,12 @@ namespace mw {
      }
     return true;
 
+    }
+
+    void ProgramOptions::show_help()
+    {
+        cout << prog_desciption << endl;
+        cout << *po << endl;
     }
 
     void ProgramOptions::print(ostream & os)
