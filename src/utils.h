@@ -13,7 +13,11 @@
 
 namespace  mw {
 
+  using namespace std;
   namespace bf = boost::filesystem;
+
+
+  constexpr double MEGABYTE() {return 1024.0*1024.0;}
 
 
   /**
@@ -160,6 +164,33 @@ namespace  mw {
   std::string removeExtension(const bf::path & filename)
   {
     return removeExtension(filename.string());
+  }
+
+  /**
+   * Filesystem utilities
+   */
+  namespace fs
+  {
+
+    vector<bf::path>
+    get_all_paths(const bf::path & in_path)
+    {
+
+      bf::recursive_directory_iterator dir {in_path}, dir_end;
+      vector<bf::path> paths;
+
+
+      while(dir != dir_end)
+      {
+          //cout << dir->path() << endl;
+          paths.push_back(*dir);
+          ++dir;
+      }
+
+      return paths;
+    }
+
+
   }
 
 }
