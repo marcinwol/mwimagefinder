@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.3.0, 2015-02-08T06:20:07. -->
+<!-- Written by QtCreator 3.3.0, 2015-02-08T10:03:24. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{e600f6c4-c083-4826-bda7-e47b4131ebcc}</value>
+  <value type="QByteArray">{d8cc9231-4676-4f73-93ea-6dcb88169bb2}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -237,9 +237,9 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">app</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/m/mycpp/MwImageFinder/app/app.pro</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">/media/sf_D_DRIVE/dcm_for_tests</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">app2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/marcin/mycpp/mwimagefinder/app/app.pro</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">/mnt/e</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">app/app.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseTerminal">true</value>
