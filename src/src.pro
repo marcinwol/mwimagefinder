@@ -10,9 +10,11 @@ TEMPLATE = lib
 TARGET = myapp
 
 SOURCES += myclass.cpp \
-    programoptions.cpp
+    programoptions.cpp \
+    imagefinderoptions.cpp
 
 HEADERS += myclass.h \
     infix_iterator.h \
     utils.h \
-    programoptions.h
+    programoptions.h \
+    imagefinderoptions.h

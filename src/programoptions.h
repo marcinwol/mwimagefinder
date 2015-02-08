@@ -11,20 +11,15 @@ namespace mw {
     using namespace std;
     using namespace boost::program_options;
 
-    static const string ABOUT =
-            "mwoimagefinder -I /input/folder \n"
-            "\n"
-            "The program searches an input folder (--in-dir or -I) "
-            "for all images contained in it and its subfolders."
-            "Once found, it generates an csv in the --in-dir folder"
-            "or in the current working directory."
-            "\n";
-
     class ProgramOptions
     {
 
+    protected:
      int ac;
      char** av;
+
+     string prog_desciption;
+
      unique_ptr<options_description> po;
      unique_ptr<positional_options_description> p;
 
@@ -38,20 +33,13 @@ namespace mw {
       void print(ostream & os);
 
       template<typename T>
-      T get(const string & op_name)
-      {
-          T op_value {};
-          if (!vm.count(op_name)) {
-              return op_value;
-          }
-
-          return vm[op_name].as<T>();
-      }
+      T get(const string & op_name);
 
       virtual ~ProgramOptions();
 
-    private:
-      void add_options();
+    protected:
+      virtual void add_options() = 0;
+      virtual void add_description() = 0;
 
 
     };
