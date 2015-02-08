@@ -12,31 +12,24 @@ namespace mw {
         ac {acc}, av {avv}
     {
 
-        po = make_unique<options_description>(ABOUT);
-        p  = make_unique<positional_options_description>();
-
-        add_options();
     }
 
 
-    void ProgramOptions::add_options()
+    template<typename T>
+    T ProgramOptions::get(const string & op_name)
     {
-        po->add_options()
-            ("help,h", "produce help message")
-            ("in-dir,I",  value<string>(), "input folder")
-            ("out-dir,O", value<string>(), "output folder")
-            ("file-type,T", value<string>(),
-                            "file type to search, e.g. \"DMC,TIFF,JPEG\"")
-            ("verbose,v", value<bool>()->implicit_value(true),
-                            "verbose output")
-            ("path-file,p", value<string>(),
-                            "files to store image paths found")
-            ("csv-file,C", value<string>(),
-                          "output csv file path");
+        T op_value {};
+        if (!vm.count(op_name)) {
+            return op_value;
+        }
 
-        p->add("in-dir", -1);
+        return vm[op_name].as<T>();
     }
 
+    // explisit instantiations of get template function
+    template string ProgramOptions::get<string>(const string &);
+    template bool ProgramOptions::get<bool>(const string &);
+    template int ProgramOptions::get<int>(const string &);
 
 
 
