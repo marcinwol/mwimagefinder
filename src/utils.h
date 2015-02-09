@@ -7,6 +7,7 @@
 #include <regex>
 
 
+
 #include <boost/filesystem.hpp>
 
 #include "infix_iterator.h"
@@ -173,18 +174,37 @@ namespace  mw {
   {
 
     vector<bf::path>
-    get_all_paths(const bf::path & in_path)
+    get_all_paths(const bf::path & in_path, bool show_progress = false)
     {
 
       bf::recursive_directory_iterator dir {in_path}, dir_end;
       vector<bf::path> paths;
 
+      size_t i {0};
+
+      if (show_progress) {
+        cout << "Reading files: " << endl;
+      }
 
       while(dir != dir_end)
       {
           //cout << dir->path() << endl;
           paths.push_back(*dir);
           ++dir;
+
+          if (show_progress && ++i % 100 == 0) {
+           cout << "\r"
+                << "Read " << i << " files ..."
+                << flush;
+          }
+      }
+
+
+      if (show_progress) {
+        cout << endl
+             << "Total number of files found is: "
+             << paths.size()
+             << endl;
       }
 
       return paths;
