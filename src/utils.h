@@ -187,11 +187,16 @@ namespace  mw {
       }
 
 
-
       while(dir != dir_end)
       {
 
-           try {
+
+          if( boost::filesystem::is_symlink(*dir)) {
+               dir.no_push();
+          }
+
+          try
+          {
             if (bf::is_regular_file(*dir)){
                 //cout << i <<": "<< *dir << endl;
                 paths.push_back(*dir);
@@ -202,7 +207,6 @@ namespace  mw {
                 cout << " ... skipping." << *dir;
                 cout << endl;
           }
-
 
 
           if (show_progress && ++i % 100 == 0) {

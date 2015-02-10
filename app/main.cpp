@@ -32,7 +32,7 @@ using namespace boost::filesystem;
 int main(int ac, char* av[])
 {
 
-    mw::ImageFinderOptions po(ac, av);
+    mw::ImageFinderOptions po {ac, av};
 
     if (!po.parse_options()) {
         return 1;
@@ -48,11 +48,11 @@ int main(int ac, char* av[])
     vector<string> file_types {mw::split(file_type, ',')};
 
     if (!exists(in_dir)) {
-         in_dir = path{current_path()};
+         in_dir = path {current_path()};
     }
 
     if (out_csv.empty()) {
-         out_csv = path{in_dir / path("found_files.csv")};
+         out_csv = path {in_dir / path("found_files.csv")};
     }
 
     cout << "In-dir: " << in_dir << endl;
