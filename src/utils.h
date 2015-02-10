@@ -191,6 +191,11 @@ namespace  mw {
       while(dir != dir_end)
       {
 
+
+          if( boost::filesystem::is_symlink(*dir)) {
+               dir.no_push();
+          }
+
            try {
             if (bf::is_regular_file(*dir)){
                 //cout << i <<": "<< *dir << endl;
