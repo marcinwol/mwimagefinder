@@ -186,18 +186,32 @@ namespace  mw {
         cout << "Reading files: " << endl;
       }
 
+
+
       while(dir != dir_end)
       {
-          //cout << dir->path() << endl;
-          paths.push_back(*dir);
-          ++dir;
+
+           try {
+            if (bf::is_regular_file(*dir)){
+                //cout << i <<": "<< *dir << endl;
+                paths.push_back(*dir);
+            }
+            ++dir;
+          } catch(bf::filesystem_error & e)  {
+                cout << e.what() << ": " << *dir;
+                cout << " ... skipping." << *dir;
+                cout << endl;
+          }
+
+
 
           if (show_progress && ++i % 100 == 0) {
-           cout << "\r"
-                << "Read " << i << " files ..."
-                << flush;
+              cout  << "\r" << "Read " << i << " files ..."
+                    << flush;
           }
       }
+
+
 
 
       if (show_progress) {

@@ -62,7 +62,6 @@ int main(int ac, char* av[])
 
     vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
 
-    cout << all_paths.size() << endl;
 
 
     return 0;
