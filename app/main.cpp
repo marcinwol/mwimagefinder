@@ -21,6 +21,7 @@
 
 #include "utils.h"
 #include "imagefinderoptions.h"
+#include "image.h"
 
 
 using namespace std;
@@ -60,8 +61,14 @@ int main(int ac, char* av[])
     mw::print_iterable(file_types);
 
 
-    vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
+    //vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
 
+    path img_path {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
+
+
+    mw::Image img {img_path.string()};
+
+    cout << img.magick() << endl;
 
 
     return 0;
