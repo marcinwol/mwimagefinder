@@ -22,6 +22,7 @@
 #include "utils.h"
 #include "imagefinderoptions.h"
 #include "image.h"
+#include "path.h"
 
 
 using namespace std;
@@ -63,12 +64,16 @@ int main(int ac, char* av[])
 
     //vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
 
-    path img_path {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
+    mw::Path img_path {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
+    path img_path1 {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
+    string img_path2 {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
 
 
-    mw::Image img {img_path.string()};
+    mw::Image img {img_path2};
+
 
     cout << img.magick() << endl;
+    cout << img.getPath() << endl;
 
 
     return 0;

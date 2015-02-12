@@ -11,10 +11,12 @@ TARGET = myapp
 
 SOURCES += myclass.cpp \
     programoptions.cpp \
-    imagefinderoptions.cpp
+    imagefinderoptions.cpp \
+    path.cpp
 
 HEADERS += myclass.h \
     infix_iterator.h \
     utils.h \
     programoptions.h \
-    imagefinderoptions.h
+    imagefinderoptions.h \
+    path.h
