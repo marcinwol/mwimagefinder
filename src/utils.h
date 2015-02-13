@@ -1,5 +1,5 @@
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef UTILS1_H
+#define UTILS1_H
 
 #include <iostream>
 #include <sstream>
@@ -263,10 +263,28 @@ namespace  mw {
     }
 
 
+    /**
+     * Get file size in MB
+     *
+     * @brief get_file_size
+     * @param p
+     * @return
+     */
+    double get_file_size(const bf::path & p)
+    {
+
+      double sizeMB = static_cast<double>(bf::file_size(p))/MEGABYTE();
+
+      return round(sizeMB*100)/100;
+
+    }
+
+
+
   }
 
 }
 
 
-#endif // UTILS_H
+#endif // UTILS1_H
 

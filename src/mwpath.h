@@ -12,13 +12,13 @@ namespace mw {
   using namespace std;
   using namespace boost::filesystem;
 
-  class Path: public boost::filesystem::path
+  class MwPath: public boost::filesystem::path
   {
 
     using boost::filesystem::path::path;
 
   public:
-   virtual ~Path();
+   virtual ~MwPath();
   };
 
 }

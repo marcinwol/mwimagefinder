@@ -21,8 +21,8 @@
 
 #include "utils.h"
 #include "imagefinderoptions.h"
-#include "image.h"
-#include "path.h"
+#include "mwimage.h"
+#include "mwpath.h"
 
 
 using namespace std;
@@ -64,16 +64,18 @@ int main(int ac, char* av[])
 
     //vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
 
-    mw::Path img_path {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
+    mw::MwPath img_path {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
     path img_path1 {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
     string img_path2 {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
 
 
-    mw::Image img {img_path2};
+    mw::MwImage img {img_path2};
 
 
     cout << img.magick() << endl;
-    cout << img.getPath() << endl;
+    cout << img.getType() << endl;
+    cout << img << endl;
+    cout << mw::fs::get_file_size(img_path) << endl;
 
 
     return 0;

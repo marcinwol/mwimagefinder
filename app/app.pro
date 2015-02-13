@@ -6,10 +6,8 @@ CONFIG -= qt
 
 TEMPLATE = app
 
-SOURCES += main.cpp \
-    image.cpp
+SOURCES += main.cpp
 
 LIBS += -L../src -lmyapp
 
-HEADERS += \
-    image.h
+#HEADERS +=

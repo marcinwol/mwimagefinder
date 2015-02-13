@@ -12,11 +12,13 @@ TARGET = myapp
 SOURCES += myclass.cpp \
     programoptions.cpp \
     imagefinderoptions.cpp \
-    path.cpp
+    mwpath.cpp \
+    mwimage.cpp
 
 HEADERS += myclass.h \
     infix_iterator.h \
     utils.h \
     programoptions.h \
     imagefinderoptions.h \
-    path.h
+    mwpath.h \
+    mwimage.h
