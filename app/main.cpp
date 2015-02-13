@@ -77,6 +77,13 @@ int main(int ac, char* av[])
     cout << img << endl;
     cout << mw::fs::get_file_size(img_path) << endl;
 
+    img.readProperties();
+
+    for(const auto & p: img.getProperties())
+    {
+     cout << p.first <<  ": " << p.second << endl;
+    }
+
 
     return 0;
 }

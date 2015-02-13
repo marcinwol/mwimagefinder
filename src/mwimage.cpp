@@ -31,6 +31,47 @@ namespace mw {
     return fs::get_file_size(getPath());
   }
 
+  void MwImage::readProperties()
+  {
+    const char * property;
+    const char * value;
+
+    MagickCore::Image * core_image = this->image();
+
+
+    this->properties["format"] = core_image->magick;
+
+    (void) GetImageProperty(core_image,"exif:*");
+    (void) GetImageProperty(core_image,"icc:*");
+    (void) GetImageProperty(core_image,"iptc:*");
+    (void) GetImageProperty(core_image,"xmp:*");
+
+    ResetImagePropertyIterator(core_image);
+    property=GetNextImageProperty(core_image);
+
+    if (property != (const char *) NULL)
+      {
+          while (property != (const char *) NULL)
+            {
+              value = GetImageProperty(core_image, property);
+              this->properties[property] =  value;
+              property = GetNextImageProperty(core_image);
+            }
+
+      }
+  }
+
+  MwImage::properties_map
+  MwImage::getProperties() const
+  {
+    return this->properties;
+  }
+
+   bool MwImage::propertiesEmpty() const
+   {
+     return properties.empty();
+   }
+
 
   MwImage::~MwImage()
   {
