@@ -1,5 +1,5 @@
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef UTILS1_H
+#define UTILS1_H
 
 #include <iostream>
 #include <sstream>
@@ -182,7 +182,8 @@ namespace  mw {
 
       size_t i {0};
 
-      if (show_progress) {
+      if (show_progress)
+      {
         cout << "Reading files: " << endl;
       }
 
@@ -191,7 +192,8 @@ namespace  mw {
       {
 
 
-          if( boost::filesystem::is_symlink(*dir)) {
+          if( boost::filesystem::is_symlink(*dir))
+          {
                dir.no_push();
           }
 
@@ -202,23 +204,24 @@ namespace  mw {
                 paths.push_back(*dir);
             }
             ++dir;
-          } catch(bf::filesystem_error & e)  {
+          } catch(bf::filesystem_error & e)
+          {
                 cout << e.what() << ": " << *dir;
                 cout << " ... skipping." << *dir;
                 cout << endl;
           }
 
 
-          if (show_progress && ++i % 100 == 0) {
+          if (show_progress && ++i % 100 == 0)
+          {
               cout  << "\r" << "Read " << i << " files ..."
                     << flush;
           }
       }
 
 
-
-
-      if (show_progress) {
+      if (show_progress)
+      {
         cout << endl
              << "Total number of files found is: "
              << paths.size()
@@ -229,10 +232,59 @@ namespace  mw {
     }
 
 
+
+    bool
+    create_output_dir(const string & out_path, bool remove_if_exist = false)
+    {
+
+      try
+      {
+
+        if (bf::exists(out_path) && remove_if_exist == true)
+        {
+           // cout << "removing: " << out_path <<endl;
+              bf::remove_all(out_path);
+        }
+
+       bf::create_directory(out_path);
+       return true;
+
+      } catch(const bf::filesystem_error & e)
+      {
+         errp(e.what());
+      }
+      return false;
+    }
+
+    bool
+    create_output_dir(const bf::path & out_path, bool remove_if_exist = false)
+    {
+      return create_output_dir(out_path.string(),remove_if_exist);
+    }
+
+
+    /**
+     * Get file size in MB
+     *
+     * @brief get_file_size
+     * @param p
+     * @return
+     */
+    double get_file_size(const bf::path & p)
+    {
+
+      double sizeMB = static_cast<double>(bf::file_size(p))/MEGABYTE();
+
+      return round(sizeMB*100)/100;
+
+    }
+
+
+
   }
 
 }
 
 
-#endif // UTILS_H
+#endif // UTILS1_H
 
