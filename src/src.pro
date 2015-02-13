@@ -13,7 +13,8 @@ SOURCES += myclass.cpp \
     programoptions.cpp \
     imagefinderoptions.cpp \
     mwpath.cpp \
-    mwimage.cpp
+    mwimage.cpp \
+    utils.cpp
 
 HEADERS += myclass.h \
     infix_iterator.h \

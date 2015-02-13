@@ -28,7 +28,7 @@ namespace mw {
 
   double MwImage::getDiskSize() const
   {
-    return 0.0;//mw::fs::get_file_size(getPath());
+    return fs::get_file_size(getPath());
   }
 
 
@@ -39,7 +39,8 @@ namespace mw {
 
   ostream& operator<<(ostream& os, const MwImage & img)
   {
-    os << img.getPath() <<": " << img.getType() ;
+    os << img.getPath() <<": " << img.getType()
+       << " " << img.getDiskSize() << "MB";
     return os;
   }
 
