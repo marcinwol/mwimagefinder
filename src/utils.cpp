@@ -124,6 +124,7 @@ namespace  mw {
             if (bf::is_regular_file(*dir)){
                 //cout << i <<": "<< *dir << endl;
                 paths.push_back(*dir);
+                ++i;
             }
             ++dir;
           } catch(bf::filesystem_error & e)
@@ -134,7 +135,7 @@ namespace  mw {
           }
 
 
-          if (show_progress && ++i % 100 == 0)
+          if (show_progress && (i % 100) == 0)
           {
               cout  << "\r" << "Read " << i << " files ..."
                     << flush;

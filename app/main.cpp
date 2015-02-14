@@ -68,7 +68,7 @@ int main(int ac, char* av[])
 
     for (const path & p: all_paths)
     {
-        cout << p << endl;
+     //   cout << p << endl;
     }
 
 
