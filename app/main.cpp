@@ -64,7 +64,13 @@ int main(int ac, char* av[])
 
     vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
 
+<<<<<<< HEAD
     cout << all_paths.size() << endl;
+=======
+    mw::MwPath img_path {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
+    path img_path1 {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
+    string img_path2 {"/home/m/Downloads/Julia"};
+>>>>>>> 209008f707bfca387d41be6270ab59cef67451c8
 
 //    mw::MwPath img_path {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
 //    path img_path1 {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
@@ -73,14 +79,24 @@ int main(int ac, char* av[])
 
 //    mw::MwImage img {img_path2};
 
+<<<<<<< HEAD
+=======
+    cout << img.magick() << endl;
+    cout << img.getType() << endl;
+    cout << img << endl;
+>>>>>>> 209008f707bfca387d41be6270ab59cef67451c8
 
 //    cout << img.magick() << endl;
 //    cout << img.getType() << endl;
 //    cout << img << endl;
 
+<<<<<<< HEAD
 //    img.readProperties();
 
 //   cout << img.getResolution() << endl;
+=======
+   cout << img.getResolution() << endl;
+>>>>>>> 209008f707bfca387d41be6270ab59cef67451c8
 
 //    for(const auto & p: img.getProperties())
 //    {
