@@ -66,6 +66,11 @@ int main(int ac, char* av[])
 
     cout << all_paths.size() << endl;
 
+    for (const path & p: all_paths)
+    {
+        cout << p << endl;
+    }
+
 
 //    mw::MwPath img_path {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
 //    path img_path1 {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
