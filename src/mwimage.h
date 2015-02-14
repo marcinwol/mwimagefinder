@@ -7,13 +7,20 @@
 
 #include <Magick++.h>
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include "mwpath.h"
+#include "mwresolution.h"
 #include "utils.h"
 
 namespace mw {
 
-  using namespace boost::filesystem;
+   using namespace boost::filesystem;
+
+    static const string PIXEL_SPACING_KEY_WORD = "pixelspacing";
+
+    static const double INCH = 25.4; // 1 inch = 25.4 milimieters
 
 
   class MwImage: public Magick::Image
@@ -46,6 +53,9 @@ namespace mw {
     bool propertiesEmpty() const;
 
     properties_map getProperties() const;
+    void calcResolution();
+    const MwResolution & getResolution() const {return resolution;};
+    bool isDCM() const {return getType() == "DCM";}
 
 
     virtual ~MwImage();
@@ -57,6 +67,7 @@ namespace mw {
     friend ostream & operator<<(ostream & os, const MwImage & img);
 
     properties_map properties {};
+    MwResolution resolution {};
 
   };
 
