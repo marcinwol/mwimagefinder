@@ -62,27 +62,30 @@ int main(int ac, char* av[])
     mw::print_iterable(file_types);
 
 
-    //vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
+    vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
 
-    mw::MwPath img_path {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
-    path img_path1 {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
-    string img_path2 {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
+    cout << all_paths.size() << endl;
+
+//    mw::MwPath img_path {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
+//    path img_path1 {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
+//    string img_path2 {"/home/m/Downloads/Julia"};
 
 
-    mw::MwImage img {img_path2};
+//    mw::MwImage img {img_path2};
 
 
-    cout << img.magick() << endl;
-    cout << img.getType() << endl;
-    cout << img << endl;
-    cout << mw::fs::get_file_size(img_path) << endl;
+//    cout << img.magick() << endl;
+//    cout << img.getType() << endl;
+//    cout << img << endl;
 
-    img.readProperties();
+//    img.readProperties();
 
-    for(const auto & p: img.getProperties())
-    {
-     cout << p.first <<  ": " << p.second << endl;
-    }
+//   cout << img.getResolution() << endl;
+
+//    for(const auto & p: img.getProperties())
+//    {
+//     cout << p.first <<  ": " << p.second << endl;
+//    }
 
 
     return 0;
