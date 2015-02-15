@@ -23,7 +23,18 @@ namespace mw {
     img_path = mw::MwPath(opt->fileName());
   }
 
+  MwImage::MwImage(const MwImage & other):
+    Magick::Image(other)
+  {
+    cout << "Copy constructor" << endl;
+  }
 
+  MwImage & MwImage::operator=(const MwImage & other)
+  {
+    Magick::Image::operator=(other);
+    cout << "Copy assignment" << endl;
+    return *this;
+  }
 
   MwImage::MwImage(const string &i_path)
     :Magick::Image(i_path)

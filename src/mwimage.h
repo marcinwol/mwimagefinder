@@ -40,6 +40,12 @@ namespace mw {
     MwImage(const MwPath & i_path);
     MwImage(const string & i_path);
 
+    //copy constructor
+    MwImage( const MwImage & other);
+
+    //copy assignment
+    MwImage & operator=(const MwImage & other);
+
     MwPath getPath() const {return img_path;}
 
     string getType() const;

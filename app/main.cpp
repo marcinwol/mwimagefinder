@@ -60,6 +60,18 @@ int main(int ac, char* av[])
     cout << "In-dir: " << in_dir << endl;
     cout << "out_csv: " << out_csv << endl;
 
+    string p {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/13.01-17.01.11/DICOM/PA000001/ST000001/SE000001/IM000001"};
+
+    mw::MwImage img {p};
+    mw::MwImage img2;
+
+
+    img2 = img;
+    img2.display();
+
+
+    return 0;
+
 
     vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
 
