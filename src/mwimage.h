@@ -35,8 +35,9 @@ namespace mw {
 
 
     MwImage():Magick::Image() {};
+    MwImage(const Magick::Image & image_);
+    MwImage(const path &i_path);
     MwImage(const MwPath & i_path);
-    MwImage(const path & i_path);
     MwImage(const string & i_path);
 
     MwPath getPath() const {return img_path;}
@@ -64,6 +65,7 @@ namespace mw {
     virtual ~MwImage();
 
     static bool is_image(const path & img_path_);
+    //static MwImage is_image(const path & img_path_);
 
 
   protected:

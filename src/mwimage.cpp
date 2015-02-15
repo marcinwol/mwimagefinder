@@ -4,18 +4,29 @@
 
 namespace mw {
 
-  MwImage::MwImage(const MwPath &i_path):Magick::Image(i_path.string())
+  MwImage::MwImage(const MwPath &i_path)
+    :Magick::Image(i_path.string())
   {
     img_path = i_path;
   }
 
-  MwImage::MwImage(const path &i_path):Magick::Image(i_path.string())
+  MwImage::MwImage(const path &i_path)
+    :Magick::Image(i_path.string())
   {
     img_path = MwPath(i_path);
   }
 
+  MwImage::MwImage(const Magick::Image & image_)
+    :Magick::Image(image_)
+  {
+    const Magick::Options * opt = image_.constOptions();
+    img_path = mw::MwPath(opt->fileName());
+  }
 
-  MwImage::MwImage(const string &i_path):Magick::Image(i_path)
+
+
+  MwImage::MwImage(const string &i_path)
+    :Magick::Image(i_path)
   {
     img_path = MwPath(i_path);
   }
@@ -189,6 +200,19 @@ namespace mw {
       return false;
     }
   }
+
+//   MwImage MwImage::is_image(const path & img_path_)
+//   {
+//     try
+//     {
+//       Magick::Image img ;
+//       img.ping(img_path_.string());
+//       return MwImage(img);
+//     } catch(Magick::Error & e)
+//     {
+//       return MwImage{};
+//     }
+//   }
 
 }
 

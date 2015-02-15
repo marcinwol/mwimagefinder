@@ -77,6 +77,11 @@ int main(int ac, char* av[])
 
       if (mw::MwImage::is_image(t))  {
           //cout << "is image" << endl;
+
+       //   Magick::Image imgTmp;
+        //  imgTmp.ping(t.string());
+       //   cout << mw::MwImage(imgTmp).getType() << endl;
+
           img_paths.emplace_back(t);
       }
     }
@@ -84,7 +89,19 @@ int main(int ac, char* av[])
     cout << endl
          <<"Found " << img_paths.size()
          << " out of " << all_paths.size()
-         << "analyzed." << endl;
+         << " analyzed." << endl;
+
+    for (size_t i = 0; i < img_paths.size(); ++i )
+    {
+      const mw::MwPath & t = img_paths[i];
+      cout << i+1 << "/"<< all_paths.size() << ": Image found ";
+      cout << t.filename() << endl;
+
+//      mw::MwImage img;
+//      img.ping(t);
+//      cout <<  "F" << endl;
+
+    }
 
 
 
