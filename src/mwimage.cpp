@@ -190,6 +190,7 @@ namespace mw {
 
   bool MwImage::is_image(const path & img_path_)
   {
+
     try
     {
       Magick::Image img ;
