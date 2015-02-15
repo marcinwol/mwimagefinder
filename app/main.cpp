@@ -59,36 +59,33 @@ int main(int ac, char* av[])
 
     cout << "In-dir: " << in_dir << endl;
     cout << "out_csv: " << out_csv << endl;
-    mw::print_iterable(file_types);
 
 
     vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
 
-    cout << all_paths.size() << endl;
+    vector<mw::MwPath> img_paths;
 
-    for (const path & p: all_paths)
+
+    // check if found files are images, i.e. if they
+    // are recognized by ImageMagick++. If yes,
+    // then save their paths.
+    for (size_t i = 0; i < all_paths.size(); ++i )
     {
-     //   cout << p << endl;
+      const path & t = all_paths[i];
+      cout << i+1 << "/"<< all_paths.size() << ": Analyzing ";
+      cout << t.filename() << endl;
+
+      if (mw::MwImage::is_image(t))  {
+          //cout << "is image" << endl;
+          img_paths.emplace_back(t);
+      }
     }
 
+    cout << endl
+         <<"Found " << img_paths.size()
+         << " out of " << all_paths.size()
+         << "analyzed." << endl;
 
-//    mw::MwPath img_path {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
-//    path img_path1 {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/ID 12R/DICOM/S00001/SER00001/I00002"};
-//    string img_path2 {"/home/m/Downloads/Julia"};
-
-
-//    mw::MwImage img {img_path2};
-
-
-//    cout << img.magick() << endl;
-//    cout << img.getType() << endl;
-//    cout << img << endl;
-
-
-//    for(const auto & p: img.getProperties())
-//    {
-//     cout << p.first <<  ": " << p.second << endl;
-//    }
 
 
     return 0;

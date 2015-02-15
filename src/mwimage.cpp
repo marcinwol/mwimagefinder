@@ -143,6 +143,16 @@ namespace mw {
 
   }
 
+  void  MwImage::ping ( const path & image_path )
+  {
+
+    this->img_path = image_path;
+    ping(image_path.string());
+    cout << "my ping" << image_path << endl;
+
+
+  }
+
   MwImage::properties_map
   MwImage::getProperties() const
   {
@@ -165,6 +175,19 @@ namespace mw {
     os << img.getPath() <<": " << img.getType()
        << " " << img.getDiskSize() << "MB";
     return os;
+  }
+
+  bool MwImage::is_image(const path & img_path_)
+  {
+    try
+    {
+      Magick::Image img ;
+      img.ping(img_path_.string());
+      return true;
+    } catch(Magick::Error & e)
+    {
+      return false;
+    }
   }
 
 }

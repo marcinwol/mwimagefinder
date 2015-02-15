@@ -23,7 +23,7 @@ namespace mw {
     static const double INCH = 25.4; // 1 inch = 25.4 milimieters
 
 
-  class MwImage: public Magick::Image
+  class MagickPPExport MwImage: public Magick::Image
   {
 
    using Magick::Image::Image;
@@ -34,6 +34,7 @@ namespace mw {
     typedef std::map<string, string> properties_map;
 
 
+    MwImage():Magick::Image() {};
     MwImage(const MwPath & i_path);
     MwImage(const path & i_path);
     MwImage(const string & i_path);
@@ -57,8 +58,12 @@ namespace mw {
     const MwResolution & getResolution() const {return resolution;};
     bool isDCM() const {return getType() == "DCM";}
 
+    void  ping ( const path & image_path );
+
 
     virtual ~MwImage();
+
+    static bool is_image(const path & img_path_);
 
 
   protected:
