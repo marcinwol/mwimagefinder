@@ -75,13 +75,10 @@ int main(int ac, char* av[])
       cout << i+1 << "/"<< all_paths.size() << ": Analyzing ";
       cout << t.filename() << endl;
 
-      if (mw::MwImage::is_image(t))  {
-          //cout << "is image" << endl;
-
-       //   Magick::Image imgTmp;
-        //  imgTmp.ping(t.string());
-       //   cout << mw::MwImage(imgTmp).getType() << endl;
-
+      Magick::Image img;
+      if (mw::MwImage::is_image(t, &img))  {
+          cout << "is image "
+               << " :" << img.magick() << endl;
           img_paths.emplace_back(t);
       }
     }

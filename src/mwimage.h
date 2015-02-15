@@ -64,7 +64,8 @@ namespace mw {
 
     virtual ~MwImage();
 
-    static bool is_image(const path & img_path_);
+    static bool is_image(const path & img_path_,
+                         Magick::Image * pimage_);
     //static MwImage is_image(const path & img_path_);
 
 

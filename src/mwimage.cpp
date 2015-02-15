@@ -188,12 +188,21 @@ namespace mw {
     return os;
   }
 
-  bool MwImage::is_image(const path & img_path_)
+  bool MwImage::is_image(const path & img_path_,
+                         Magick::Image * pimage_ = nullptr)
   {
+
     try
     {
       Magick::Image img ;
       img.ping(img_path_.string());
+
+
+      if (pimage_ != nullptr)
+      {
+        *pimage_ = img;
+      }
+
       return true;
     } catch(Magick::Error & e)
     {
