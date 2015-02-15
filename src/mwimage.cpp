@@ -29,6 +29,13 @@ namespace mw {
     cout << "Copy constructor" << endl;
   }
 
+  MwImage::MwImage(const string &i_path)
+    :Magick::Image(i_path)
+  {
+    img_path = MwPath(i_path);
+  }
+
+
   MwImage & MwImage::operator=(const MwImage & other)
   {
     Magick::Image::operator=(other);
@@ -36,11 +43,6 @@ namespace mw {
     return *this;
   }
 
-  MwImage::MwImage(const string &i_path)
-    :Magick::Image(i_path)
-  {
-    img_path = MwPath(i_path);
-  }
 
   string MwImage::getType() const
   {

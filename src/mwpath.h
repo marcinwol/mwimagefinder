@@ -18,6 +18,13 @@ namespace mw {
     using boost::filesystem::path::path;
 
   public:
+
+    //copy constructor
+   // MwPath( const MwPath & other);
+
+    //copy assignment
+    MwPath & operator=(const MwPath & other);
+
    virtual ~MwPath();
   };
 
