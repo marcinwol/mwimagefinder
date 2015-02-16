@@ -66,7 +66,9 @@ int main(int ac, char* av[])
 
     vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
 
-    vector<mw::MwPath> img_paths;
+    using MwImagePtr = shared_ptr<mw::MwImage>;
+
+    vector<MwImagePtr> vec_imgs;
 
 
     // check if found files are images, i.e. if they
@@ -78,30 +80,30 @@ int main(int ac, char* av[])
       cout << i+1 << "/"<< all_paths.size() << ": Analyzing ";
       cout << t.filename() << endl;
 
-      mw::MwImage img;
-      if (mw::MwImage::is_image(t, &img))  {
+      MwImagePtr img_ptr = make_shared<mw::MwImage>();
+
+      if (mw::MwImage::is_image(t, img_ptr))  {
           cout << "is image "
-               << " :" << img.magick()
-               << img.getPath()
+               << " :" << img_ptr->magick()
+               << img_ptr->getPath()
                << endl;
-          img_paths.emplace_back(t);
+          vec_imgs.push_back(move(img_ptr));
       }
     }
 
     cout << endl
-         <<"Found " << img_paths.size()
+         <<"Found " << vec_imgs.size()
          << " out of " << all_paths.size()
          << " analyzed." << endl;
 
-    for (size_t i = 0; i < img_paths.size(); ++i )
+    for (size_t i = 0; i < vec_imgs.size(); ++i )
     {
-      const mw::MwPath & t = img_paths[i];
+      const MwImagePtr & img_ptr = vec_imgs[i];
       cout << i+1 << "/"<< all_paths.size() << ": Image found ";
-      cout << t.filename() << endl;
-
-//      mw::MwImage img;
-//      img.ping(t);
-//      cout <<  "F" << endl;
+      cout << img_ptr->getPath()
+           << " "
+           << img_ptr->getType()
+           << endl;
 
     }
 

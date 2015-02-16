@@ -70,7 +70,8 @@ namespace mw {
 
     virtual ~MwImage();
 
-    static bool is_image(const path & img_path_, MwImage *pimage_);
+    static bool is_image(const path & img_path_,
+                         shared_ptr<MwImage> pimage_);
     //static MwImage is_image(const path & img_path_);
 
 

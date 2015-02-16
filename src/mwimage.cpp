@@ -203,7 +203,7 @@ namespace mw {
   }
 
   bool MwImage::is_image(const path & img_path_,
-                         MwImage * pimage_ = nullptr)
+          shared_ptr<MwImage> pimage_ = nullptr)
   {
 
     try
@@ -212,7 +212,7 @@ namespace mw {
       img.ping(img_path_.string());
 
 
-      if (pimage_ != nullptr)
+      if (pimage_)
       {
         *pimage_ = mw::MwImage(img);
       }
