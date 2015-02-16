@@ -80,6 +80,7 @@ int main(int ac, char* av[])
       cout << i+1 << "/"<< all_paths.size() << ": Analyzing ";
       cout << t.filename() << endl;
 
+<<<<<<< HEAD
       MwImagePtr img_ptr = make_shared<mw::MwImage>();
 
       if (mw::MwImage::is_image(t, img_ptr))  {
@@ -88,6 +89,12 @@ int main(int ac, char* av[])
                << img_ptr->getPath()
                << endl;
           vec_imgs.push_back(move(img_ptr));
+=======
+
+      if (mw::MwImage::is_image(t))  {
+          cout << "is image " << endl;
+          img_paths.emplace_back(t);
+>>>>>>> 7c750550b86282e9c32fdac8aeecafa27b623e07
       }
     }
 
