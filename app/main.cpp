@@ -71,10 +71,10 @@ int main(int ac, char* av[])
 
     //img2 = img;
 
-    //mw::MwPath p1(p);
-    //mw::MwPath p2;
+    mw::MwPath p1(p);
+    mw::MwPath p2(p2);
 
-    //p2 = p1;
+    p2 = p1;
 
     return 0;
 

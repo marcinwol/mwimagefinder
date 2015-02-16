@@ -19,8 +19,10 @@ namespace mw {
 
   public:
 
+    MwPath();
+
     //copy constructor
-   // MwPath( const MwPath & other);
+    MwPath( const MwPath & other);
 
     //copy assignment
     MwPath & operator=(const MwPath & other);
