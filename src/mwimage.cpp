@@ -39,7 +39,8 @@ namespace mw {
   MwImage & MwImage::operator=(const MwImage & other)
   {
     Magick::Image::operator=(other);
-    cout << "Copy assignment" << endl;
+    //cout << "Copy assignment" << endl;
+    img_path = other.img_path;
     return *this;
   }
 
@@ -202,7 +203,7 @@ namespace mw {
   }
 
   bool MwImage::is_image(const path & img_path_,
-                         Magick::Image * pimage_ = nullptr)
+                         MwImage * pimage_ = nullptr)
   {
 
     try
@@ -213,7 +214,7 @@ namespace mw {
 
       if (pimage_ != nullptr)
       {
-        *pimage_ = img;
+        *pimage_ = mw::MwImage(img);
       }
 
       return true;

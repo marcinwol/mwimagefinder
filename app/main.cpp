@@ -59,27 +59,10 @@ int main(int ac, char* av[])
 
 
 
-
     cout << "In-dir: " << in_dir << endl;
     cout << "out_csv: " << out_csv << endl;
 
-    string p {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/13.01-17.01.11/DICOM/PA000001/ST000001/SE000001/IM000001"};
-
-    mw::MwImage img {p};
-    //mw::MwImage img2;
-
-
-    //img2 = img;
-
-    mw::MwPath p1(p);
-    mw::MwPath p2(p2);
-
-    p2 = p1;
-
-    return 0;
-
-
-
+    //string p {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/13.01-17.01.11/DICOM/PA000001/ST000001/SE000001/IM000001"};
 
     vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
 
@@ -95,10 +78,12 @@ int main(int ac, char* av[])
       cout << i+1 << "/"<< all_paths.size() << ": Analyzing ";
       cout << t.filename() << endl;
 
-      Magick::Image img;
+      mw::MwImage img;
       if (mw::MwImage::is_image(t, &img))  {
           cout << "is image "
-               << " :" << img.magick() << endl;
+               << " :" << img.magick()
+               << img.getPath()
+               << endl;
           img_paths.emplace_back(t);
       }
     }
