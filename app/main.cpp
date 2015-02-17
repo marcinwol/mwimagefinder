@@ -72,7 +72,11 @@ int main(int ac, char* av[])
     vector<mw::MwImage::uptr> vec_imgs;
 
 
+<<<<<<< HEAD
     mw::mwcsv f {};
+=======
+    mw::MwCSV f {};
+>>>>>>> 492c3a5945cf3db39ab7715ddf43540ffae2735a
 
     return 0;
 
