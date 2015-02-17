@@ -31,7 +31,9 @@ namespace mw {
 
   public:
 
-    typedef std::map<string, string> properties_map;
+    using properties_map = std::map<string, string>;
+    using sptr = shared_ptr<MwImage>;
+    using uptr = unique_ptr<MwImage>;
 
 
     MwImage():Magick::Image() {};
@@ -70,8 +72,7 @@ namespace mw {
 
     virtual ~MwImage();
 
-    static bool is_image(const path & img_path_,
-                         shared_ptr<MwImage> pimage_);
+    static bool is_image(const path & img_path_, const uptr &pimage_);
     //static MwImage is_image(const path & img_path_);
 
 

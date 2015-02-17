@@ -66,9 +66,9 @@ int main(int ac, char* av[])
 
     vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
 
-    using MwImagePtr = shared_ptr<mw::MwImage>;
 
-    vector<MwImagePtr> vec_imgs;
+
+    vector<mw::MwImage::uptr> vec_imgs;
 
 
     // check if found files are images, i.e. if they
@@ -80,7 +80,7 @@ int main(int ac, char* av[])
       cout << i+1 << "/"<< all_paths.size() << ": Analyzing ";
       cout << t.filename() << endl;
 
-      MwImagePtr img_ptr = make_shared<mw::MwImage>();
+      mw::MwImage::uptr img_ptr = make_unique<mw::MwImage>();
 
       if (mw::MwImage::is_image(t, img_ptr))  {
           cout << "is image "
@@ -97,13 +97,17 @@ int main(int ac, char* av[])
          << " out of " << all_paths.size()
          << " analyzed." << endl;
 
-    for (size_t i = 0; i < vec_imgs.size(); ++i )
+    for (size_t i = 0; i < vec_imgs.size(); ++i)
     {
-      const MwImagePtr & img_ptr = vec_imgs[i];
-      cout << i+1 << "/"<< all_paths.size() << ": Image found ";
+      const mw::MwImage::uptr & img_ptr = vec_imgs[i];
+      img_ptr->readProperties();
+
+      cout << i+1 << "/"<< all_paths.size() << ": Image found ";     
+
       cout << img_ptr->getPath()
            << " "
            << img_ptr->getType()
+           << "res:" << img_ptr->getResolution()
            << endl;
 
     }

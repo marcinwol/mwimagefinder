@@ -203,7 +203,7 @@ namespace mw {
   }
 
   bool MwImage::is_image(const path & img_path_,
-          shared_ptr<MwImage> pimage_ = nullptr)
+                         const uptr & pimage_ = nullptr)
   {
 
     try
