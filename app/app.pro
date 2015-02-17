@@ -9,5 +9,6 @@ TEMPLATE = app
 SOURCES += main.cpp
 
 LIBS += -L../src -lmyapp
+LIBS += -L../src/csv -lmwcsv
 
 #HEADERS +=

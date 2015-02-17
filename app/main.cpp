@@ -23,6 +23,7 @@
 #include "imagefinderoptions.h"
 #include "mwimage.h"
 #include "mwpath.h"
+#include "csv/mwcsv.h"
 
 
 using namespace std;
@@ -69,6 +70,11 @@ int main(int ac, char* av[])
 
 
     vector<mw::MwImage::uptr> vec_imgs;
+
+
+    mw::MwCSV f {};
+
+    return 0;
 
 
     // check if found files are images, i.e. if they
