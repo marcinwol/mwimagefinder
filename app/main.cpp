@@ -72,9 +72,6 @@ int main(int ac, char* av[])
     vector<mw::MwImage::uptr> vec_imgs;
 
 
-    mw::mwcsv f {};
-
-    return 0;
 
 
     // check if found files are images, i.e. if they
@@ -103,6 +100,12 @@ int main(int ac, char* av[])
          << " out of " << all_paths.size()
          << " analyzed." << endl;
 
+
+
+    ofstream of {"/tmp/test.csv"};
+    mw::mwcsv_writer f {of};
+
+
     for (size_t i = 0; i < vec_imgs.size(); ++i)
     {
       const mw::MwImage::uptr & img_ptr = vec_imgs[i];
@@ -115,6 +118,7 @@ int main(int ac, char* av[])
            << img_ptr->getType()
            << "res:" << img_ptr->getResolution()
            << endl;
+      f.write(img_ptr->getPath().string());
 
     }
 
