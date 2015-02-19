@@ -5,17 +5,26 @@
 namespace mw {
 
 
-  mwcsv::mwcsv()
+  mwcsv_writer::mwcsv_writer(ofstream & of_):of{of_}
   {
-
-    cout <<"MwCSV constructor"<< endl;
+    cout <<"mwcsv_writer constructor"<< endl;
   }
 
 
-  mwcsv::~mwcsv()
-  {
 
+  void mwcsv_writer::write(const string & line)
+  {
+    of << line << endl;
   }
+
+
+
+
+  mwcsv_writer::~mwcsv_writer()
+  {
+    of.close();
+  }
+
 
 }
 
