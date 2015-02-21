@@ -7,7 +7,7 @@ CONFIG   -= qt
 
 TEMPLATE = lib
 
-TARGET = myext
+TARGET = mwext
 
 SOURCES += \
     format.cpp
