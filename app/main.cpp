@@ -78,14 +78,16 @@ int main(int ac, char* av[])
     for (size_t i = 0; i < all_paths.size(); ++i )
     {
       const path & t = all_paths[i];
-      cout << i+1 << "/" << all_paths.size() << ": Analyzing ";
-      cout << t.filename() << endl;
+
+      fmt::print("{}/{}: Analyzing {}...", i+1, all_paths.size(), t.filename());
 
       mw::MwImage::uptr img_ptr = make_unique<mw::MwImage>();
 
       if (mw::MwImage::is_image(t, img_ptr))  {
-          cout << "is image: " << img_ptr->magick() << endl;
+          fmt::print(" is image: {}.\n",  img_ptr->magick());
           vec_imgs.push_back(move(img_ptr));
+      } else {
+          fmt::print(" not an image.\n",  img_ptr->magick());
       }
     }
 
@@ -93,14 +95,13 @@ int main(int ac, char* av[])
 
     if (vec_imgs.empty())
     {
-        cout << "\nNo image files found!.\n" << endl;
+        mw::errp("\nNo image files found!.\n");
         return 0;
     }
 
 
-    cout << "\nFound " << vec_imgs.size()
-         << " out of " << all_paths.size()
-         << " analyzed." << endl;
+    fmt::print("Found {} images out of {} analyzed\n",
+               vec_imgs.size(), all_paths.size());
 
 
     // save results to the output csv file
@@ -124,18 +125,9 @@ int main(int ac, char* av[])
       const mw::MwImage::uptr & img_ptr = vec_imgs[i];
       img_ptr->readProperties();
 
-      cout << i+1 << "/"<< all_paths.size() << ": Image found ";     
-
-      cout << img_ptr->getPath()
-           << " "
-           << img_ptr->getType()
-           << " size[MB]:" << img_ptr->getDiskSize()
-           << " res:" << img_ptr->getResolution()
-           << endl;
-
-
       const mw::MwResolution & res = img_ptr->getResolution();
 
+      fmt::print("Image {}/{}:", i+1, all_paths.size(), img_ptr->getPath());
 
       a_line[0] = "\""+img_ptr->getPath().string()+"\"";
       a_line[1] = img_ptr->getType();
@@ -145,6 +137,7 @@ int main(int ac, char* av[])
       a_line[5] = to_string(res.getDPI()[0]);
       a_line[6] = to_string(res.getDPI()[1]);
 
+      fmt::print("{}\n", mw::join(a_line));
 
 
       f.write(a_line);
