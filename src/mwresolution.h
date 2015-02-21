@@ -32,6 +32,7 @@ namespace mw {
         MwResolution & operator=(MwResolution && other);
 
         array<double, 2> getPS() const;
+        array<double, 2> getDPI() const;
 
         bool operator==(const MwResolution & other);
         ~MwResolution();

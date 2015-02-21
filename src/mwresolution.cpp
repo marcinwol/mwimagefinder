@@ -24,6 +24,11 @@ namespace mw {
       return array<double,2> {x, y};
     }
 
+    array<double, 2> MwResolution::getDPI() const
+    {
+       return array<double, 2> {24.4/x, 24.4/y};
+    }
+
 
     MwResolution & MwResolution::operator=(MwResolution && other)
     {

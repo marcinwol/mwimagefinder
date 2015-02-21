@@ -61,15 +61,11 @@ int main(int ac, char* av[])
     }
 
 
-
     cout << "In-dir: " << in_dir << endl;
     cout << "out_csv: " << out_csv << endl;
 
-    //string p {"/media/sf_D_DRIVE/dcm_for_tests/ding/b/13.01-17.01.11/DICOM/PA000001/ST000001/SE000001/IM000001"};
 
     vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
-
-
 
     vector<mw::MwImage::uptr> vec_imgs;
 
@@ -82,7 +78,7 @@ int main(int ac, char* av[])
     for (size_t i = 0; i < all_paths.size(); ++i )
     {
       const path & t = all_paths[i];
-      cout << i+1 << "/"<< all_paths.size() << ": Analyzing ";
+      cout << i+1 << "/" << all_paths.size() << ": Analyzing ";
       cout << t.filename() << endl;
 
       mw::MwImage::uptr img_ptr = make_unique<mw::MwImage>();
@@ -117,10 +113,11 @@ int main(int ac, char* av[])
     mw::mwcsv_writer f {of};
 
     string header[] = {"File", "Type", "Size[MB]",
-                       "ps_x[mm]", "ps_y[mm]"};
+                       "ps_x[mm]", "ps_y[mm]",
+                       "DPIx", "DPIy"};
     f.write(header);
 
-    vector<string> a_line {5};
+    vector<string> a_line {7};
 
     for (size_t i = 0; i < vec_imgs.size(); ++i)
     {
@@ -137,11 +134,16 @@ int main(int ac, char* av[])
            << endl;
 
 
+      const mw::MwResolution & res = img_ptr->getResolution();
+
+
       a_line[0] = "\""+img_ptr->getPath().string()+"\"";
       a_line[1] = img_ptr->getType();
       a_line[2] = to_string(img_ptr->getDiskSize());
-      a_line[3] = to_string(img_ptr->getResolution().getPS()[0]);
-      a_line[4] = to_string(img_ptr->getResolution().getPS()[1]);
+      a_line[3] = to_string(res.getPS()[0]);
+      a_line[4] = to_string(res.getPS()[1]);
+      a_line[5] = to_string(res.getDPI()[0]);
+      a_line[6] = to_string(res.getDPI()[1]);
 
 
 
