@@ -30,6 +30,9 @@ namespace mw {
         MwResolution(const MwResolution & other);
         MwResolution & operator=( const MwResolution & other );
         MwResolution & operator=(MwResolution && other);
+
+        array<double, 2> getPS() const;
+
         bool operator==(const MwResolution & other);
         ~MwResolution();
     private:
