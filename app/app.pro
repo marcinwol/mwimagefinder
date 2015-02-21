@@ -6,6 +6,8 @@ CONFIG -= qt
 
 TEMPLATE = app
 
+TARGET = mwimagefinder
+
 SOURCES += main.cpp
 
 LIBS += -L../src -lmyapp
