@@ -15,15 +15,12 @@ SOURCES += myclass.cpp \
     mwpath.cpp \
     mwimage.cpp \
     utils.cpp \
-    mwresolution.cpp \
-    format.cpp
+    mwresolution.cpp
 
 HEADERS += myclass.h \
-    infix_iterator.h \
     utils.h \
     programoptions.h \
     imagefinderoptions.h \
     mwpath.h \
     mwimage.h \
-    mwresolution.h \
-    format.h
+    mwresolution.h

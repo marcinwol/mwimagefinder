@@ -10,7 +10,7 @@
 
 #include <boost/filesystem.hpp>
 
-#include "infix_iterator.h"
+#include "../ext/infix_iterator.h"
 
 namespace  mw {
 

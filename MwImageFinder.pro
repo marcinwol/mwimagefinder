@@ -3,10 +3,12 @@ TEMPLATE = subdirs
 CONFIG += ordered
 
 SUBDIRS = \
+    ext \
     src/csv \
-    src \
+    src \   
     app
 
+app.depends = ext
 app.depends = src/csv
 app.depends = src
 
