@@ -80,11 +80,11 @@ namespace  mw {
   }
 
   /**
-   * Joints an interable into a string using
+   * Joints an interable into a string   using
    * given delim.
    */
   template<typename T>
-  std::string join(const T & elems, char * delim = ",")
+  std::string join(const T & elems, const  char * delim = ",")
   {
       std::stringstream ss;
 

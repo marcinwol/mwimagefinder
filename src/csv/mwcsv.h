@@ -8,6 +8,8 @@
 
 #include <boost/filesystem.hpp>
 
+#include <utils.h>
+
 
 namespace mw {
 
@@ -18,13 +20,29 @@ namespace mw {
   {
   public:
     mwcsv_writer() = delete;
-    mwcsv_writer(ofstream & of_);
+    mwcsv_writer(ofstream & of_, const char * delim_ = ",");
 
-    void write(const string & line);
+
+    template<typename T>
+    void write(const T & elems);
+
+    void write(const string & a_line);
+
+    // overload function template for char[].
+    template<typename T, int N>
+    void write(T (&elems) [N]) {
+       for (int i = 0; i < N - 1 ; ++i) {
+           of << elems[i] << delim;
+       }
+       of << elems[N-1] << endl;
+    }
+
 
     virtual ~mwcsv_writer();
+
   protected:
     ofstream & of;
+    const char * delim;
   };
 
 

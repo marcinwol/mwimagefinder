@@ -34,7 +34,7 @@ namespace mw {
     }
 
 
-    ostream& operator<<(ostream& os, const MwResolution & res)
+    ostream & operator<<(ostream & os, const MwResolution & res)
     {
       os << res.x <<"x"<< res.y ;
       return os;

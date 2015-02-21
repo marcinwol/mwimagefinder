@@ -63,8 +63,11 @@ namespace mw {
     bool propertiesEmpty() const;
 
     properties_map getProperties() const;
+
     void calcResolution();
-    const MwResolution & getResolution() const {return resolution;};
+
+    const MwResolution & getResolution() const {return resolution;}
+
     bool isDCM() const {return getType() == "DCM";}
 
     void  ping ( const path & image_path );

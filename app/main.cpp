@@ -102,9 +102,14 @@ int main(int ac, char* av[])
 
 
 
+    // save results to the output csv file
     ofstream of {"/tmp/test.csv"};
     mw::mwcsv_writer f {of};
 
+    string header[] = {"File", "Type", "Size[MB]"};
+    f.write(header);
+
+    vector<string> a_line {4};
 
     for (size_t i = 0; i < vec_imgs.size(); ++i)
     {
@@ -116,9 +121,17 @@ int main(int ac, char* av[])
       cout << img_ptr->getPath()
            << " "
            << img_ptr->getType()
-           << "res:" << img_ptr->getResolution()
+           << " res:" << img_ptr->getResolution()
+           << " size:" << img_ptr->getDiskSize()
            << endl;
-      f.write(img_ptr->getPath().string());
+
+      a_line[0] = img_ptr->getPath().string();
+      a_line[1] = img_ptr->getType();
+      a_line[2] = to_string(img_ptr->getDiskSize());
+
+
+
+      f.write(a_line);
 
     }
 
