@@ -218,9 +218,19 @@ namespace mw {
       }
 
       return true;
-    } catch(Magick::Error & e)
+    }
+    catch(Magick::Error & e)
+
     {
       return false;
+    }
+    catch(Magick::WarningCorruptImage & e)
+    {
+      return false;
+    }
+    catch(Magick::WarningCoder & e)
+    {
+       return false;
     }
   }
 
