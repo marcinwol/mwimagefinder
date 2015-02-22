@@ -8,7 +8,12 @@ The result of the program is a csv file with found files and their type, disk si
 
 ##Motivation
 
-The program was developed in a response to a growing need of working with large sets of medical images in a JPEG, TIFF and a DICOM formats. 
+The program was developed in a response to a growing need of working with large sets of images in a JPEG, TIFF and DICOM formats. 
 
+##Examples
+Search for DCM, TIFF and JPEG image files in /media/dir1/ /home/m/dir2/. Save results in ./results.csv.
+```bash
+mwimagefinder --in-dir /media/dir1/ /home/m/dir2/ --csv-file ./results.csv --file-type DCM,TIFF,JPEG 
+```
 
 
