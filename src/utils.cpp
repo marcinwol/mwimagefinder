@@ -137,7 +137,8 @@ namespace  mw {
 
           if (show_progress && (i % 100) == 0)
           {
-              cout  << "\r" << "Read " << i << " files ..."
+              cout  << "\r" << "Read " << i << " files "
+                    << "in " << in_path
                     << flush;
           }
       }

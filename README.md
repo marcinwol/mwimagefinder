@@ -10,6 +10,15 @@ The result of the program is a csv file with found files and their type, disk si
 
 The program was developed in a response to a growing need of working with large sets of images in a JPEG, TIFF and DICOM formats. 
 
+##Supported formats
+
+Well, mwimagefinder uses[ImageMagick](http://www.imagemagick.org/) for identifying image files, thus it supports all formats supported by ImageMagick. There are over 100 major image formats. For complete liist of the files supported see [here](http://www.imagemagick.org/script/formats.php).
+
+Since ImageMagick format support depends on many external libraries (e.g. zlib) the best way to check which formats are support on your system use the following command:
+```
+identify -list format
+```
+
 ##Example usage
 
 Search for image files in the current folder. Save results in found_files.csv:
