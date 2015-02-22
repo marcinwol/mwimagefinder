@@ -12,7 +12,7 @@ The program was developed in a response to a growing need of working with large 
 
 ##Supported formats
 
-Well, mwimagefinder uses[ImageMagick](http://www.imagemagick.org/) for identifying image files, thus it supports all formats supported by ImageMagick. There are over 100 major image formats. For complete liist of the files supported see [here](http://www.imagemagick.org/script/formats.php).
+Well, mwimagefinder uses [ImageMagick](http://www.imagemagick.org/) for identifying image files, thus it supports all formats supported by ImageMagick. There are over 100 major image formats. For complete liist of the files supported see [here](http://www.imagemagick.org/script/formats.php).
 
 Since ImageMagick format support depends on many external libraries (e.g. zlib) the best way to check which formats are support on your system use the following command:
 ```
@@ -46,4 +46,12 @@ Search for DCM, TIFF and JPEG image files in /media/dir1/ /home/m/dir2/. Save re
 mwimagefinder --in-dir /media/dir1/ /home/m/dir2/ --csv-file ./results.csv --file-type DCM,TIFF,JPEG 
 ```
 
+## Example of csv file created
 
+```
+In_dir,File,Type,Size[MB],ps_x[mm],ps_y[mm],DPIx,DPIy
+"/media/sf_D_DRIVE/","/media/sf_D_DRIVE/From_SD_Card/DCIM/Camera/fremantle 2/IMG_20131226_155158.jpg",JPEG,0.430859,0.352778,0.352778,69.165354,69.165354
+"/media/sf_D_DRIVE/dcm_for_tests","/media/sf_D_DRIVE/dcm_for_tests/0000b-no-phi.dcm",DCM,1.400000,0.143000,0.143000,170.629371,170.629371
+"/media/sf_D_DRIVE/dcm_for_tests","/media/sf_D_DRIVE/dcm_for_tests/0001x-no-phi.dcm",DCM,0.880000,0.143000,0.143000,170.629371,170.629371
+"/media/sf_D_DRIVE/dcm_for_tests","/media/sf_D_DRIVE/dcm_for_tests/0002x-no-phi.dcm",DCM,0.220000,0.143000,0.143000,170.629371,170.629371
+```
