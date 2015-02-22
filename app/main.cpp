@@ -116,6 +116,11 @@ int main(int ac, char* av[])
 
       if (mw::MwImage::is_image(t, img_ptr))  {
 
+          if (!file_types.empty() && !img_ptr->is_any_type(file_types))
+          {
+            continue;
+          }
+
           img_ptr->readProperties();
 
           const mw::MwResolution & res = img_ptr->getResolution();
@@ -148,7 +153,7 @@ int main(int ac, char* av[])
 
 
     fmt::print("\n");
-    fmt::print("Found {} images out of {} analyzed\n", imgNo, all_paths.size());
+    fmt::print("Found {} images out of {} files analyzed\n", imgNo, all_paths.size());
     fmt::print("CSV file saved in: {}\n", out_csv);
 
     return 0;

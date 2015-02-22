@@ -168,6 +168,31 @@ namespace mw {
 
   }
 
+
+  bool MwImage::is_any_type(const vector<string> & types) const
+  {
+
+    vector<string>::const_iterator  ai;
+
+    ai = std::find(types.begin(), types.end(), getType());
+
+    if (ai != types.end())
+    {
+        return true;
+    }
+
+    return false;
+  }
+
+
+  bool MwImage::is_any_type(const string & types_) const
+  {
+       vector<string> good_types {mw::split(types_, ',')};
+       return is_any_type(good_types);
+  }
+
+
+
   void  MwImage::ping ( const path & image_path )
   {
 
@@ -220,7 +245,6 @@ namespace mw {
       return true;
     }
     catch(Magick::Error & e)
-
     {
       return false;
     }

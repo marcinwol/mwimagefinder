@@ -72,6 +72,10 @@ namespace mw {
 
     void  ping ( const path & image_path );
 
+    bool is_any_type(const vector<string> & types) const;
+    bool is_any_type(const string & types) const;
+
+
 
     virtual ~MwImage();
 
