@@ -106,7 +106,7 @@ namespace  mw {
 
       if (show_progress)
       {
-        cout << "Reading files: " << endl;
+        cout << "Reading files in " << in_path << endl;
       }
 
 
