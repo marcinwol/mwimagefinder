@@ -10,6 +10,7 @@ The result of the program is a csv file with found files and their type, disk si
 
 The program was developed in a response to a growing need of working with large sets of images in a JPEG, TIFF and DICOM formats. 
 
+<<<<<<< HEAD
 ##Example usage
 
 Search for image files in the current folder. Save results in found_files.csv
@@ -26,6 +27,9 @@ Search for JPEG and PNG files in the /tmp folder and save results in /tmp/found_
 mwimagefinder --file-type JPEG,PNG --csv-file  /tmp/found_JPEG.csv --in-dir /tmp/
 ```
 
+=======
+##Examples
+>>>>>>> e5a889d69cff24b31ec131f9039a293efe161730
 Search for DCM, TIFF and JPEG image files in /media/dir1/ /home/m/dir2/. Save results in ./results.csv.
 ```bash
 mwimagefinder --in-dir /media/dir1/ /home/m/dir2/ --csv-file ./results.csv --file-type DCM,TIFF,JPEG 
