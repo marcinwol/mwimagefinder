@@ -23,35 +23,55 @@ using namespace boost::filesystem;
 int main(int ac, char* av[])
 {
 
+
     mw::ImageFinderOptions po {ac, av};
 
     if (!po.parse_options()) {
         return 1;
     }
 
-    bool verbose        {po.get<bool>("verbose")};
-    path in_dir         {po.get<string>("in-dir")};
-    path out_dir        {po.get<string>("out-dir")};
-    path path_file      {po.get<string>("path-file")};
-    path out_csv        {po.get<string>("csv-file")};
-    string file_type    {po.get<string>("file-type")};
-
+    bool verbose              {po.get<bool>("verbose")};
+    vector<string> in_dirs    {po.get<vector<string>>("in-dir")};
+    path out_dir              {po.get<string>("out-dir")};
+    path path_file            {po.get<string>("path-file")};
+    path out_csv              {po.get<string>("csv-file")};
+    string file_type          {po.get<string>("file-type")};
     vector<string> file_types {mw::split(file_type, ',')};
 
-    if (!exists(in_dir)) {
-         in_dir = current_path();
+    if (in_dirs.empty())
+    {
+      in_dirs.push_back(current_path().string());
     }
+    else
+    {
+      for (const string & in_dir : in_dirs)
+      {
+        if (!exists(path(in_dir)))
+        {
+          fmt::print_colored(fmt::RED, "Folder \"{}\" does not exist.\n", in_dir);
+          return 1;
+        }
+      }
+    }
+
 
     if (out_csv.empty()) {
          out_csv = path {current_path() / path("found_files.csv")};
     }
 
 
-    cout << "In-dir: " << in_dir << endl;
     cout << "out_csv: " << out_csv << endl;
 
 
-    vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
+    // read all paths from input folders into
+    // one vector for paths
+    vector<path> all_paths {};
+
+    for (const string & in_dir : in_dirs)
+    {
+      vector<path> found_paths = mw::fs::get_all_paths(in_dir, true);
+      all_paths.insert(all_paths.end(), found_paths.begin(), found_paths.end());
+    }
 
     // save results to the output csv file
     ofstream of {out_csv.string()};
@@ -79,11 +99,22 @@ int main(int ac, char* av[])
     {
       const path & t = all_paths[i];
 
-      fmt::print("{}/{}: Analyzing {}...", i+1, all_paths.size(), t.filename());
+      if (verbose)
+      {
+        fmt::print("{}/{}: Analyzing {}...", i+1, all_paths.size(), t.filename());
+      }
+      else
+      {
+          if (i % 10 == 0)
+          {
+              fmt::print("\rAnalyzed {}/{} files ...", i, all_paths.size());
+              cout << flush;
+          }
+      }
 
       mw::MwImage::uptr img_ptr = make_unique<mw::MwImage>();
 
-      if (mw::MwImage::is_image(t, img_ptr))  {        
+      if (mw::MwImage::is_image(t, img_ptr))  {
 
           img_ptr->readProperties();
 
@@ -99,12 +130,18 @@ int main(int ac, char* av[])
 
           f.write(a_line);
 
-          fmt::print(" is image: {}.\n",  img_ptr->magick());
-          fmt::print("{}\n", mw::join(a_line));
+          if (verbose)
+          {
+            fmt::print(" is image: {}.\n",  img_ptr->magick());
+            fmt::print("{}\n", mw::join(a_line));
+          }
 
           ++imgNo;
       } else {
-          fmt::print(" not an image.\n",  img_ptr->magick());
+          if (verbose)
+          {
+            fmt::print(" not an image.\n",  img_ptr->magick());
+          }
       }
     }
 

@@ -36,7 +36,7 @@ namespace mw {
             po->add_options()
                 ("help,h", value<bool>()->implicit_value(true),
                           "produce help message")
-                ("in-dir,I",  value<string>(), "input folder")
+                ("in-dir,I",  value<vector<string>>()->multitoken(), "input folder")
                 ("out-dir,O", value<string>(), "output folder")
                 ("file-type,T", value<string>(),
                                 "file type to search, e.g. \"DMC,TIFF,JPEG\"")
