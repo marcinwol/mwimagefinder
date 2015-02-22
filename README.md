@@ -50,7 +50,7 @@ mwimagefinder --in-dir /media/dir1/ /home/m/dir2/ --csv-file ./results.csv --fil
 
 |In_dir|File|Type|Size[MB]|ps_x[mm]|ps_y[mm]|DPIx|DPIy|
 |-----|-----|-----|-----|-----|-----|-----|-----|
-|"/media/sf_D_DRIVE/","/media/sf_D_DRIVE/From_SD_Card/DCIM/Camera/fremantle 2/IMG_20131226_155158.jpg",JPEG,0.430859|0.352778|0.352778|69.165354|69.165354|
+|"/media/sf_D_DRIVE/"|"/media/sf_D_DRIVE/From_SD_Card/DCIM/Camera/fremantle 2/IMG_20131226_155158.jpg"|JPEG|0.430859|0.352778|0.352778|69.165354|69.165354|
 |"/media/sf_D_DRIVE/dcm_for_tests"|"/media/sf_D_DRIVE/dcm_for_tests/0000b-no-phi.dcm"|DCM|1.400000|0.143000|0.143000|170.629371|170.629371|
 |"/media/sf_D_DRIVE/dcm_for_tests"|"/media/sf_D_DRIVE/dcm_for_tests/0001x-no-phi.dcm"|DCM|0.880000|0.143000|0.143000|170.629371|170.629371|
 |"/media/sf_D_DRIVE/dcm_for_tests"|"/media/sf_D_DRIVE/dcm_for_tests/0002x-no-phi.dcm"|DCM|0.220000|0.143000|0.143000|170.629371|170.629371|
