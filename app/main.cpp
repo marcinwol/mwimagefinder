@@ -25,7 +25,8 @@ int main(int ac, char* av[])
 
     mw::ImageFinderOptions po {ac, av};
 
-    if (!po.parse_options()) {
+    if (!po.parse_options())
+    {
         return 1;
     }
 
@@ -54,7 +55,8 @@ int main(int ac, char* av[])
     }
 
 
-    if (out_csv.empty()) {
+    if (out_csv.empty())
+    {
          out_csv = path {current_path() / path("found_files.csv")};
     }
 
