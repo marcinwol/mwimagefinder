@@ -122,6 +122,7 @@ int main(int ac, char* av[])
               {
                   fmt::print("\rAnalyzed {}/{} files in {} ...",
                              fileNo, totalPathNo, in_path);
+
                   cout << flush;
               }
           }
