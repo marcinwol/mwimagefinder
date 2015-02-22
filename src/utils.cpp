@@ -198,7 +198,7 @@ namespace  mw {
 
       double sizeMB = static_cast<double>(bf::file_size(p))/MEGABYTE();
 
-      return round(sizeMB*100)/100;
+      return sizeMB;
 
     }
 
