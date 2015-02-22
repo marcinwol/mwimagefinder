@@ -28,6 +28,7 @@ namespace mw {
 
     // explisit instantiations of get template function
     template string ProgramOptions::get<string>(const string &);
+    template vector<string> ProgramOptions::get<vector<string>>(const string &);
     template bool ProgramOptions::get<bool>(const string &);
     template int ProgramOptions::get<int>(const string &);
 
