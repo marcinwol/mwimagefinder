@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <array>
 
 #include <boost/filesystem.hpp>
 
@@ -63,14 +62,21 @@ int main(int ac, char* av[])
     cout << "out_csv: " << out_csv << endl;
 
 
+    size_t imgNo  {0};
+    size_t fileNo {0};
+    size_t totalPathNo {0};
+
+
+
     // read all paths from input folders into
     // one vector for paths
-    vector<path> all_paths {};
+    vector<pair<path,vector<path>>> all_paths {};
 
     for (const string & in_dir : in_dirs)
     {
       vector<path> found_paths = mw::fs::get_all_paths(in_dir, true);
-      all_paths.insert(all_paths.end(), found_paths.begin(), found_paths.end());
+      all_paths.push_back(make_pair(path(in_dir), found_paths));
+      totalPathNo += found_paths.size();
     }
 
     // save results to the output csv file
@@ -82,14 +88,12 @@ int main(int ac, char* av[])
 
     mw::mwcsv_writer f {of};
 
-    string header[] = {"File", "Type", "Size[MB]",
+    string header[] = {"In_dir", "File", "Type", "Size[MB]",
                        "ps_x[mm]", "ps_y[mm]",
                        "DPIx", "DPIy"};
     f.write(header);
 
-    vector<string> a_line {7};
-
-    size_t imgNo {0};
+    vector<string> a_line {8};
 
 
     // check if found files are images, i.e. if they
@@ -97,63 +101,76 @@ int main(int ac, char* av[])
     // read their properties and save to csv file.
     for (size_t i = 0; i < all_paths.size(); ++i)
     {
-      const path & t = all_paths[i];
 
-      if (verbose)
+      const pair<path, vector<path>> & found_paths = all_paths[i];
+      const path & in_path = found_paths.first;
+      const vector<path> & found_files = found_paths.second;
+
+      for (size_t j = 0; j < found_files.size(); ++j)
       {
-        fmt::print("{}/{}: Analyzing {}...", i+1, all_paths.size(), t.filename());
-      }
-      else
-      {
-          if (i % 10 == 0)
-          {
-              fmt::print("\rAnalyzed {}/{} files ...", i, all_paths.size());
-              cout << flush;
-          }
-      }
+          const path & t = found_files[j];
 
-      mw::MwImage::uptr img_ptr = make_unique<mw::MwImage>();
-
-      if (mw::MwImage::is_image(t, img_ptr))  {
-
-          if (!file_types.empty() && !img_ptr->is_any_type(file_types))
-          {
-            continue;
-          }
-
-          img_ptr->readProperties();
-
-          const mw::MwResolution & res = img_ptr->getResolution();
-
-          a_line[0] = "\""+img_ptr->getPath().string()+"\"";
-          a_line[1] = img_ptr->getType();
-          a_line[2] = to_string(img_ptr->getDiskSize());
-          a_line[3] = to_string(res.getPS()[0]);
-          a_line[4] = to_string(res.getPS()[1]);
-          a_line[5] = to_string(res.getDPI()[0]);
-          a_line[6] = to_string(res.getDPI()[1]);
-
-          f.write(a_line);
+          ++fileNo;
 
           if (verbose)
           {
-            fmt::print(" is image: {}.\n",  img_ptr->magick());
-            fmt::print("{}\n", mw::join(a_line));
+            fmt::print("{}/{}: Analyzing {}...", fileNo, totalPathNo, t.filename());
+          }
+          else
+          {
+              if (j % 10 == 0)
+              {
+                  fmt::print("\rAnalyzed {}/{} files ...", fileNo, totalPathNo);
+                  cout << flush;
+              }
           }
 
-          ++imgNo;
-      } else {
-          if (verbose)
-          {
-            fmt::print(" not an image.\n",  img_ptr->magick());
+          mw::MwImage::uptr img_ptr = make_unique<mw::MwImage>();
+
+          if (mw::MwImage::is_image(t, img_ptr))  {
+
+              if (!file_types.empty() && !img_ptr->is_any_type(file_types))
+              {
+                continue;
+              }
+
+              img_ptr->readProperties();
+
+              const mw::MwResolution & res = img_ptr->getResolution();
+
+              a_line[0] = "\""+in_path.string()+"\"";
+              a_line[1] = "\""+img_ptr->getPath().string()+"\"";
+              a_line[2] = img_ptr->getType();
+              a_line[3] = to_string(img_ptr->getDiskSize());
+              a_line[4] = to_string(res.getPS()[0]);
+              a_line[5] = to_string(res.getPS()[1]);
+              a_line[6] = to_string(res.getDPI()[0]);
+              a_line[7] = to_string(res.getDPI()[1]);
+
+              f.write(a_line);
+
+              if (verbose)
+              {
+                fmt::print(" is image: {}.\n",  img_ptr->magick());
+                fmt::print("{}\n", mw::join(a_line));
+              }
+
+              ++imgNo;
           }
-      }
-    }
+          else
+          {
+              if (verbose)
+              {
+                fmt::print(" not an image.\n",  img_ptr->magick());
+              }
+          }
+      } //  for (size_t j = 0; j < found_files.size(); ++j)
+    } // for (size_t i = 0; i < all_paths.size(); ++i)
 
 
 
     fmt::print("\n");
-    fmt::print("Found {} images out of {} files analyzed\n", imgNo, all_paths.size());
+    fmt::print("Found {} images out of {} files analyzed\n", imgNo, totalPathNo);
     fmt::print("CSV file saved in: {}\n", out_csv);
 
     return 0;
