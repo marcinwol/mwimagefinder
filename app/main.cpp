@@ -1,22 +1,9 @@
 #include <iostream>
 #include <fstream>
-#include <sstream>
 #include <vector>
 #include <array>
-#include <map>
-#include <memory>
-#include <tuple>
-
-#include <stdlib.h>
-
-
-#include <Magick++.h>
-#include <magick/MagickCore.h>
 
 #include <boost/filesystem.hpp>
-#include <boost/algorithm/string.hpp>
-#include <boost/program_options.hpp>
-
 
 #include "../ext/format.h"
 
@@ -30,7 +17,6 @@
 
 using namespace std;
 using namespace boost::filesystem;
-
 
 
 
@@ -67,43 +53,6 @@ int main(int ac, char* av[])
 
     vector<path> all_paths = mw::fs::get_all_paths(in_dir, true);
 
-    vector<mw::MwImage::uptr> vec_imgs;
-
-
-
-
-    // check if found files are images, i.e. if they
-    // are recognized by ImageMagick++. If yes,
-    // then save their paths.
-    for (size_t i = 0; i < all_paths.size(); ++i )
-    {
-      const path & t = all_paths[i];
-
-      fmt::print("{}/{}: Analyzing {}...", i+1, all_paths.size(), t.filename());
-
-      mw::MwImage::uptr img_ptr = make_unique<mw::MwImage>();
-
-      if (mw::MwImage::is_image(t, img_ptr))  {
-          fmt::print(" is image: {}.\n",  img_ptr->magick());
-          vec_imgs.push_back(move(img_ptr));
-      } else {
-          fmt::print(" not an image.\n",  img_ptr->magick());
-      }
-    }
-
-
-
-    if (vec_imgs.empty())
-    {
-        mw::errp("\nNo image files found!.\n");
-        return 0;
-    }
-
-
-    fmt::print("Found {} images out of {} analyzed\n",
-               vec_imgs.size(), all_paths.size());
-
-
     // save results to the output csv file
     ofstream of {out_csv.string()};
     if (!of)
@@ -120,33 +69,52 @@ int main(int ac, char* av[])
 
     vector<string> a_line {7};
 
-    for (size_t i = 0; i < vec_imgs.size(); ++i)
+    size_t imgNo {0};
+
+
+
+
+    // check if found files are images, i.e. if they
+    // are recognized by ImageMagick++. If yes, then
+    // read their properties and save to csv file.
+    for (size_t i = 0; i < all_paths.size(); ++i)
     {
-      const mw::MwImage::uptr & img_ptr = vec_imgs[i];
-      img_ptr->readProperties();
+      const path & t = all_paths[i];
 
-      const mw::MwResolution & res = img_ptr->getResolution();
+      fmt::print("{}/{}: Analyzing {}...", i+1, all_paths.size(), t.filename());
 
-      fmt::print("Image {}/{}:", i+1, all_paths.size(), img_ptr->getPath());
+      mw::MwImage::uptr img_ptr = make_unique<mw::MwImage>();
 
-      a_line[0] = "\""+img_ptr->getPath().string()+"\"";
-      a_line[1] = img_ptr->getType();
-      a_line[2] = to_string(img_ptr->getDiskSize());
-      a_line[3] = to_string(res.getPS()[0]);
-      a_line[4] = to_string(res.getPS()[1]);
-      a_line[5] = to_string(res.getDPI()[0]);
-      a_line[6] = to_string(res.getDPI()[1]);
+      if (mw::MwImage::is_image(t, img_ptr))  {        
 
-      fmt::print("{}\n", mw::join(a_line));
+          img_ptr->readProperties();
 
+          const mw::MwResolution & res = img_ptr->getResolution();
 
-      f.write(a_line);
+          a_line[0] = "\""+img_ptr->getPath().string()+"\"";
+          a_line[1] = img_ptr->getType();
+          a_line[2] = to_string(img_ptr->getDiskSize());
+          a_line[3] = to_string(res.getPS()[0]);
+          a_line[4] = to_string(res.getPS()[1]);
+          a_line[5] = to_string(res.getDPI()[0]);
+          a_line[6] = to_string(res.getDPI()[1]);
 
+          f.write(a_line);
+
+          fmt::print(" is image: {}.\n",  img_ptr->magick());
+          fmt::print("{}\n", mw::join(a_line));
+
+          ++imgNo;
+      } else {
+          fmt::print(" not an image.\n",  img_ptr->magick());
+      }
     }
 
-    cout << "\nCSV file saved: " << out_csv << endl;
 
 
-    cout << endl;
+    fmt::print("\n");
+    fmt::print("Found {} images out of {} analyzed\n", imgNo, all_paths.size());
+    fmt::print("CSV file saved in: {}\n", out_csv);
+
     return 0;
 }
