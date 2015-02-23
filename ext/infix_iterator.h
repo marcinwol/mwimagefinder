@@ -1,62 +1,52 @@
-#ifndef INFIX_ITERATOR_H
-#define INFIX_ITERATOR_H
-
+// infix_iterator.h
+#if !defined(INFIX_ITERATOR_H_)
+#define  INFIX_ITERATOR_H_
 #include <ostream>
 #include <iterator>
+#include <string>
 
-/**
- * Joints e.g. vector of strings using predefined deliminator.
- *
- * @source http://stackoverflow.com/a/1986048/248823
- */
-
-template <class T,
-          class charT=char,
-          class traits=std::char_traits<charT> >
+template <class T, class charT=char, class traits=std::char_traits<charT> >
 class infix_ostream_iterator :
-    public std::iterator<std::output_iterator_tag,void,void,void,void>
+    public std::iterator<std::output_iterator_tag, void, void, void, void>
 {
     std::basic_ostream<charT,traits> *os;
-    charT const* delimiter;
-    bool first_elem;
+    std::basic_string<charT> delimiter;
+    std::basic_string<charT> real_delim;
 
 public:
+
     typedef charT char_type;
     typedef traits traits_type;
-    typedef std::basic_ostream<charT,traits> ostream_type;
+    typedef std::basic_ostream<charT, traits> ostream_type;
 
-    infix_ostream_iterator(ostream_type& s)
-        : os(&s),delimiter(0), first_elem(true)
+    infix_ostream_iterator(ostream_type &s)
+        : os(&s)
     {}
 
-    infix_ostream_iterator(ostream_type& s, charT const *d)
-        : os(&s),delimiter(d), first_elem(true)
+    infix_ostream_iterator(ostream_type &s, charT const *d)
+        : os(&s),
+          real_delim(d)
     {}
 
-    infix_ostream_iterator<T,charT,traits>& operator=(T const &item)
+    infix_ostream_iterator<T, charT, traits> &operator=(T const &item)
     {
-        // Here's the only real change from ostream_iterator:
-        // Normally, the '*os << item;' would come before the 'if'.
-        if (!first_elem && delimiter != 0)
-            *os << delimiter;
-        *os << item;
-        first_elem = false;
+        *os << delimiter << item;
+        delimiter = real_delim;
         return *this;
     }
 
-    infix_ostream_iterator<T,charT,traits> &operator*() {
+    infix_ostream_iterator<T, charT, traits> &operator*() {
         return *this;
     }
 
-    infix_ostream_iterator<T,charT,traits> &operator++() {
+    infix_ostream_iterator<T, charT, traits> &operator++() {
         return *this;
     }
 
-    infix_ostream_iterator<T,charT,traits> &operator++(int) {
+    infix_ostream_iterator<T, charT, traits> &operator++(int) {
         return *this;
     }
 };
 
-
-#endif // INFIX_ITERATOR_H
+#endif
 

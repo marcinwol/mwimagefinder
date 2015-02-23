@@ -13,6 +13,6 @@ SOURCES += \
     format.cpp
 
 HEADERS += \
-    format.h
+    format.h \    
     infix_iterator.h
 
