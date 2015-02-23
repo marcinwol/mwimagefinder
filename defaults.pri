@@ -13,6 +13,7 @@ unix:!macx: LIBS += -L/opt/boost_1_57_0/stage/lib
 
 #INCLUDEPATH += /usr/include/boost
 #unix:!macx: LIBS += -L/usr/local/lib
+#unix:!macx: LIBS += -L/usr/lib/x86_64-linux-gnu
 
 unix:!macx: LIBS += -lMagick++
 unix:!macx: LIBS += -lMagickCore
