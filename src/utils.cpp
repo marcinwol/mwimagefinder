@@ -1,6 +1,9 @@
 
 #include "utils.h"
 
+#include <errno.h>
+#include <fts.h>
+
 namespace  mw {
   using namespace std;
   namespace bf = boost::filesystem;
@@ -24,7 +27,7 @@ namespace  mw {
       std::string item;
       while (std::getline(ss, item, delim))
       {
-              elems.push_back(item);
+           elems.push_back(item);
       }
       return elems;
   }
@@ -94,6 +97,80 @@ namespace  mw {
 
   namespace fs
   {
+
+
+
+      /** Scaning folder for all paths using fts_read linux method.
+       * @brief get_all_paths_fts
+       * @param in_path
+       * @param found_paths
+       * @return
+       */
+      int get_all_paths_fts(const string & in_path,
+                            vector<string> & found_paths)
+      {
+
+          char * cstr = new char[in_path.length() + 1];
+          strcpy(cstr, in_path.c_str());
+
+          char * path[2] {cstr, nullptr};
+
+          size_t i {0};
+
+
+          FTS *tree = fts_open(path, FTS_NOCHDIR, 0);
+
+          if (!tree)
+          {
+              delete[] cstr;
+              perror("fts_open");
+              return 1;
+          }
+
+          FTSENT *node;
+
+          while ((node = fts_read(tree)))
+          {
+              if (node->fts_level > 0 && node->fts_name[0] == '.')
+              {
+                  fts_set(tree, node, FTS_SKIP);
+
+              }
+              else if (node->fts_info & FTS_F)
+              {
+                  if (i % 100 == 0)
+                  {
+                      cout  << "\r" << "Read " << i << " files "
+                            << "in " << in_path
+                            << flush;
+                  }
+
+                  ++i;
+
+                 found_paths.emplace_back<string>(node->fts_path);
+              }
+          }
+
+          if (errno)
+          {
+              delete[] cstr;
+              perror("fts_read");
+              return 1;
+          }
+
+          if (fts_close(tree))
+          {
+              delete[] cstr;
+              perror("fts_close");
+              return 1;
+          }
+
+          delete[] cstr;
+          return 0;
+      }
+
+
+
 
     vector<bf::path>
     get_all_paths(const bf::path & in_path, bool show_progress)

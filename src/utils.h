@@ -133,6 +133,23 @@ namespace  mw {
   namespace fs
   {
 
+     /** Scaning folder for all paths using fts_read linux method.
+     *
+     * @brief get_all_paths_fts
+     * @param in_path
+     * @param found_paths
+     * @return
+     */
+    int get_all_paths_fts(const string & in_path,
+                        vector<string> & found_paths);
+
+    /** Using boost::filesystem
+     *
+     * @brief get_all_paths
+     * @param in_path
+     * @param show_progress
+     * @return
+     */
     vector<bf::path>
     get_all_paths(const bf::path & in_path,
                   bool show_progress = false);

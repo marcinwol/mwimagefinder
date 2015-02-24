@@ -27,7 +27,7 @@ namespace mw {
     //copy assignment
     MwPath & operator=(const MwPath & other);
 
-   virtual ~MwPath();
+    virtual ~MwPath();
   };
 
 }
