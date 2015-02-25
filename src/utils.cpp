@@ -208,7 +208,7 @@ namespace  mw {
           {
                 cout << e.what() << ": " << *dir;
                 cout << " ... skipping." << *dir;
-                cout << endl;
+                cout << endl;                
           }
 
 

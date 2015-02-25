@@ -12,8 +12,14 @@ namespace mw {
     {
         add_description();
 
-        po = make_unique<options_description>(prog_desciption);
-        p  = make_unique<positional_options_description>();
+        //po = make_unique<options_description>(prog_desciption);
+        po =  unique_ptr<options_description>(
+                    new options_description {prog_desciption}
+              );
+        //p  = make_unique<positional_options_description>();
+        p  = unique_ptr<positional_options_description>(
+                    new positional_options_description {}
+             );
 
         add_options();
     }

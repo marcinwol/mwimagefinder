@@ -130,7 +130,8 @@ int main(int ac, char* av[])
               }
           }
 
-          mw::MwImage::uptr img_ptr = make_unique<mw::MwImage>();
+          //mw::MwImage::uptr img_ptr = make_unique<mw::MwImage>();
+          mw::MwImage::uptr img_ptr = unique_ptr<mw::MwImage>(new mw::MwImage {});
 
           if (mw::MwImage::is_image(t, img_ptr))  {
 
