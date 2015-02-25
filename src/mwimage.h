@@ -5,6 +5,11 @@
 #include <iostream>
 #include <map>
 
+#include <chrono>
+#include <ctime>
+
+
+
 #include <Magick++.h>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
@@ -16,11 +21,14 @@
 
 namespace mw {
 
-   using namespace boost::filesystem;
+  using namespace boost::filesystem;
 
-    static const string PIXEL_SPACING_KEY_WORD = "pixelspacing";
+  static const string PIXEL_SPACING_KEY_WORD = "pixelspacing";
 
-    static const double INCH = 25.4; // 1 inch = 25.4 milimieters
+  static const double INCH = 25.4; // 1 inch = 25.4 milimieters
+
+  static const vector<string> BAD__IMG_TYPES
+                    {"XCF", "TXT", "PDF", "ICO"};
 
 
   class MagickPPExport MwImage: public Magick::Image
