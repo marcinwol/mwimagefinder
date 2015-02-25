@@ -135,13 +135,18 @@ namespace  mw {
 
      /** Scaning folder for all paths using fts_read linux method.
      *
-     * @brief get_all_paths_fts
+     * @brief fts_dear_tree_scan
      * @param in_path
      * @param found_paths
      * @return
      */
-    int get_all_paths_fts(const string & in_path,
-                        vector<string> & found_paths);
+    int fts_dear_tree_scan(const string & in_path,
+                                vector<string> & found_paths,
+                                bool show_progress = false);
+
+    vector<bf::path>
+    get_all_paths_fts(const bf::path & in_path,
+                             bool show_progress = false);
 
     /** Using boost::filesystem
      *

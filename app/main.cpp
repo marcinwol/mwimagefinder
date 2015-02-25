@@ -76,7 +76,8 @@ int main(int ac, char* av[])
 
     for (const string & in_dir : in_dirs)
     {
-      vector<path> found_paths = mw::fs::get_all_paths(in_dir, true);
+      //vector<path> found_paths = mw::fs::get_all_paths(in_dir, true);
+      vector<path> found_paths = mw::fs::get_all_paths_fts(in_dir, true);
       all_paths.push_back(make_pair(path(in_dir), found_paths));
       totalPathNo += found_paths.size();
     }

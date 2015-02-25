@@ -101,13 +101,14 @@ namespace  mw {
 
 
       /** Scaning folder for all paths using fts_read linux method.
-       * @brief get_all_paths_fts
+       * @brief fts_dear_tree_scan
        * @param in_path
        * @param found_paths
        * @return
        */
-      int get_all_paths_fts(const string & in_path,
-                            vector<string> & found_paths)
+      int fts_dear_tree_scan(const string & in_path,
+                            vector<string> & found_paths,
+                            bool show_progress)
       {
 
           char * cstr = new char[in_path.length() + 1];
@@ -127,6 +128,12 @@ namespace  mw {
               return 1;
           }
 
+          if (show_progress)
+          {
+            cout << "Reading files in " << in_path << endl;
+          }
+
+
           FTSENT *node;
 
           while ((node = fts_read(tree)))
@@ -138,7 +145,7 @@ namespace  mw {
               }
               else if (node->fts_info & FTS_F)
               {
-                  if (i % 100 == 0)
+                  if (show_progress && (i % 100 == 0))
                   {
                       cout  << "\r" << "Read " << i << " files "
                             << "in " << in_path
@@ -167,6 +174,29 @@ namespace  mw {
 
           delete[] cstr;
           return 0;
+      }
+
+
+      vector<bf::path>
+      get_all_paths_fts(const bf::path & in_path, bool show_progress)
+      {
+           vector<bf::path> paths;
+           vector<string> paths_str;
+
+           int status {1};
+           status = fts_dear_tree_scan(in_path.string(), paths_str, show_progress);
+
+           if (status == 0)
+           {
+               paths.reserve(paths_str.size());
+               for (const string & a_path_str : paths_str)
+               {
+                   paths.push_back(bf::path {a_path_str});
+               }
+           }
+
+
+           return paths;
       }
 
 
