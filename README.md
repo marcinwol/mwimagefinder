@@ -8,7 +8,7 @@ The result of the program is a csv file with found files and their type, disk si
 
 ##Motivation
 
-The program was developed in a response to a growing need of working with large sets of images in a JPEG, TIFF and DICOM formats. 
+The program was developed in a response to a growing need of working with large sets of images in a JPEG, TIFF and DICOM formats without extensions. Thus, using normal file search methods that rely on file extensions or filenames were rather impossible. 
 
 ##Supported formats
 
