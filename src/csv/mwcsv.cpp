@@ -8,7 +8,7 @@ namespace mw {
   mwcsv_writer::mwcsv_writer(ofstream & of_, const char *delim_)
     :of (of_), delim {delim_}
   {
-    cout <<"mwcsv_writer constructor"<< endl;
+    //cout <<"mwcsv_writer constructor"<< endl;
   }
 
 

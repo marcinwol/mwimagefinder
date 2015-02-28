@@ -2,7 +2,8 @@ INCLUDEPATH += $$PWD/src
 SRC_DIR = $$PWD
 
 
-QMAKE_CXXFLAGS += -std=c++11
+#QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++1y
 
 
 
