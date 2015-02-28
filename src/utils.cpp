@@ -47,10 +47,10 @@ namespace  mw {
 
       std::vector<std::string> elems;
 
-      std::regex rgx (rgx_str);
+      boost::regex rgx (rgx_str);
 
-      std::sregex_token_iterator iter(s.begin(), s.end(), rgx, -1);
-      std::sregex_token_iterator end;
+      boost::sregex_token_iterator iter(s.begin(), s.end(), rgx, -1);
+      boost::sregex_token_iterator end;
 
       while (iter != end)
       {

@@ -4,7 +4,13 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include <regex>
+
+
+#if GCC_VERSION > 40900
+    #include <regex>
+#else
+    #include <boost/regex.hpp>
+#endif
 
 
 

@@ -44,8 +44,8 @@ namespace mw {
     using uptr = unique_ptr<MwImage>;
 
 
-    MwImage():Magick::Image() {};
-    MwImage(const Magick::Image & image_);
+    MwImage():Magick::Image() {}
+    MwImage(const Magick::Image & image_, const string & i_path);
     MwImage(const path &i_path);
     MwImage(const MwPath & i_path);
     MwImage(const string & i_path);
@@ -93,11 +93,12 @@ namespace mw {
 
   protected:
 
-    MwPath img_path {};
-    friend ostream & operator<<(ostream & os, const MwImage & img);
-
+    MwPath img_path;
     properties_map properties {};
     MwResolution resolution {};
+
+    // friends
+    friend ostream & operator<<(ostream & os, const MwImage & img);
 
   };
 

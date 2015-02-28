@@ -16,11 +16,12 @@ namespace mw {
     img_path = MwPath(i_path);
   }
 
-  MwImage::MwImage(const Magick::Image & image_)
+  MwImage::MwImage(const Magick::Image & image_, const string & i_path)
     :Magick::Image(image_)
   {
-    const Magick::Options * opt = image_.constOptions();
-    img_path = mw::MwPath(opt->fileName());
+    //const Magick::Options * opt = image_.constOptions();
+    //img_path = mw::MwPath(opt->fileName());
+      img_path = mw::MwPath(i_path);
   }
 
   MwImage::MwImage(const MwImage & other):
@@ -252,7 +253,7 @@ namespace mw {
 
       if (pimage_)
       {
-        *pimage_ = mw::MwImage(img);
+        *pimage_ = mw::MwImage(img, img_path_.string());
       }
 
       return true;

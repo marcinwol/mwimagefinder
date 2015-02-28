@@ -41,7 +41,7 @@ namespace mw {
     virtual ~mwcsv_writer();
 
   protected:
-    ofstream & of;
+    ostream & of;
     const char * delim;
   };
 
