@@ -10,9 +10,11 @@ TEMPLATE = lib
 TARGET = mwext
 
 SOURCES += \
-    format.cpp
+    format.cpp \
+    filesignature.cpp
 
 HEADERS += \
     format.h \    
-    infix_iterator.h
+    infix_iterator.h \
+    filesignature.h
 
