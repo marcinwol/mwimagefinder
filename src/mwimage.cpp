@@ -272,18 +272,12 @@ namespace mw {
     }
   }
 
-//   MwImage MwImage::is_image(const path & img_path_)
-//   {
-//     try
-//     {
-//       Magick::Image img ;
-//       img.ping(img_path_.string());
-//       return MwImage(img);
-//     } catch(Magick::Error & e)
-//     {
-//       return MwImage{};
-//     }
-//   }
+   string MwImage::is_image(const path & img_path_)
+   {
+        Signature empty_signature;
+        mw::is_image(img_path_.string(), &empty_signature);
+        return empty_signature.str();
+   }
 
 }
 

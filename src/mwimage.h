@@ -19,6 +19,8 @@
 #include "mwresolution.h"
 #include "utils.h"
 
+#include "../ext/filesignature.h"
+
 namespace mw {
 
   using namespace boost::filesystem;
@@ -88,7 +90,7 @@ namespace mw {
     virtual ~MwImage();
 
     static bool is_image(const path & img_path_, const uptr &pimage_);
-    //static MwImage is_image(const path & img_path_);
+    static string is_image(const path & img_path_);
 
 
   protected:
