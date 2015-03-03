@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-
+#include <algorithm>
 
 #include <boost/filesystem.hpp>
 
@@ -132,45 +132,73 @@ int main(int ac, char* av[])
               }
           }
 
-          mw::MwImage::uptr img_ptr = unique_ptr<mw::MwImage>(new mw::MwImage {});
+          pair<bool, string> im_type = mw::MwImage::is_image(t);
 
-          if (mw::MwImage::is_image(t, img_ptr))  {
 
-              if (!file_types.empty() && !img_ptr->is_any_type(file_types))
-              {
-                continue;
-              }
-
-              img_ptr->readProperties();
-
-              const mw::MwResolution & res = img_ptr->getResolution();
-
-              a_line[0] = "\""+in_path.string()+"\"";
-              a_line[1] = "\""+img_ptr->getPath().string()+"\"";
-              a_line[2] = img_ptr->getType();
-              a_line[3] = to_string(img_ptr->getDiskSize());
-              a_line[4] = to_string(res.getPS()[0]);
-              a_line[5] = to_string(res.getPS()[1]);
-              a_line[6] = to_string(res.getDPI()[0]);
-              a_line[7] = to_string(res.getDPI()[1]);
-
-              f.write(a_line);
-
+          if (!im_type.first) {
+             // if not an image type
               if (verbose)
               {
-                fmt::print(" is image: {}.\n",  img_ptr->magick());
-                fmt::print("{}\n", mw::join(a_line));
+                fmt::print(" not an image: {}\n",  im_type.second);
+              }
+             continue;
+          }
+
+          if (!file_types.empty())
+          {
+              // if file_types provided by the user, check if we have
+              // one of the types requested
+              if (std::find(file_types.begin(), file_types.end(), im_type.second) == file_types.end())
+              {
+                  // not found, then continue
+                  if (verbose)
+                  {
+                    fmt::print(" image found but not of interest: {}\n",  im_type.second);
+                  }
+                  continue;
               }
 
-              ++imgNo;
           }
-          else
+
+          // so here we have image file of interest. Thus, create
+          // pointer to hold our image and use is_image version
+          // that uses ImageMagick. This assures that our image
+          // is good, not damaged for example.
+
+          mw::MwImage::uptr img_ptr {new mw::MwImage{}};
+
+          if (!mw::MwImage::is_image(t, img_ptr))
           {
               if (verbose)
               {
-                fmt::print(" not an image.\n",  img_ptr->magick());
+                fmt::print("ERROR rading: {}. skipping ...", t);
               }
+              continue;
           }
+
+          img_ptr->readProperties();
+
+          const mw::MwResolution & res = img_ptr->getResolution();
+
+          a_line[0] = "\""+in_path.string()+"\"";
+          a_line[1] = "\""+img_ptr->getPath().string()+"\"";
+          a_line[2] = img_ptr->getType();
+          a_line[3] = to_string(img_ptr->getDiskSize());
+          a_line[4] = to_string(res.getPS()[0]);
+          a_line[5] = to_string(res.getPS()[1]);
+          a_line[6] = to_string(res.getDPI()[0]);
+          a_line[7] = to_string(res.getDPI()[1]);
+
+          f.write(a_line);
+
+          if (verbose)
+          {
+            fmt::print(" is image: {}.\n",  img_ptr->magick());
+            fmt::print("{}\n", mw::join(a_line));
+          }
+
+          ++imgNo;
+
       } //  for (size_t j = 0; j < found_files.size(); ++j)
     } // for (size_t i = 0; i < all_paths.size(); ++i)
 

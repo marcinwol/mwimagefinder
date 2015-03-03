@@ -48,6 +48,8 @@ namespace mw {
                                 "file type to search, e.g. \"DMC,TIFF,JPEG\"")
                 ("verbose,v", value<bool>()->implicit_value(true),
                                 "verbose output")
+                ("fast,f", value<bool>()->implicit_value(true),
+                                    "fast scane using only file signature. Dont use imagemagick")
                 ("path-file,p", value<string>(),
                                 "files to store image paths found")
                 ("csv-file,C", value<string>(),

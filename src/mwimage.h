@@ -90,7 +90,7 @@ namespace mw {
     virtual ~MwImage();
 
     static bool is_image(const path & img_path_, const uptr &pimage_);
-    static string is_image(const path & img_path_);
+    static pair<bool, string> is_image(const path & img_path_);
 
 
   protected:

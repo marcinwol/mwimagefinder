@@ -4,13 +4,13 @@
 
 namespace mw {
 
-  MwImage::MwImage(const MwPath &i_path)
+  MwImage::MwImage(const MwPath & i_path)
     :Magick::Image(i_path.string())
   {
     img_path = i_path;
   }
 
-  MwImage::MwImage(const path &i_path)
+  MwImage::MwImage(const path & i_path)
     :Magick::Image(i_path.string())
   {
     img_path = MwPath(i_path);
@@ -115,16 +115,13 @@ namespace mw {
     vector<properties_map::value_type> found_properties;
 
     // first find if we have pixel spacing propertie
-    for (const auto & kv: this->properties) {
-        if (boost::icontains(kv.first, PIXEL_SPACING_KEY_WORD)) {
+    for (const auto & kv: this->properties)
+    {
+        if (boost::icontains(kv.first, PIXEL_SPACING_KEY_WORD))
+        {
             found_properties.push_back(kv);
         }
     }
-
-//      for (const auto & kv: found_properties) {
-//          cout << kv.first << " " << kv.second << endl;
-//      }
-
 
 
 
@@ -272,11 +269,11 @@ namespace mw {
     }
   }
 
-   string MwImage::is_image(const path & img_path_)
+   pair<bool, string> MwImage::is_image(const path & img_path_)
    {
         Signature empty_signature;
-        mw::is_image(img_path_.string(), &empty_signature);
-        return empty_signature.str();
+        bool is_image = mw::is_image(img_path_.string(), &empty_signature);
+        return make_pair(is_image, empty_signature.str());
    }
 
 }
