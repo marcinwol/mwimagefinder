@@ -38,6 +38,7 @@ int main(int ac, char* av[])
     path out_csv              {po.get<string>("csv-file")};
     string file_type          {po.get<string>("file-type")};
     vector<string> file_types {mw::split(file_type, ',')};
+    bool fast_scan            {po.get<bool>("fast")};
 
     if (in_dirs.empty())
     {
@@ -94,8 +95,7 @@ int main(int ac, char* av[])
     mw::mwcsv_writer f {of};
 
     string header[] = {"In_dir", "File", "Type", "Size[MB]",
-                       "ps_x[mm]", "ps_y[mm]",
-                       "DPIx", "DPIy"};
+                       "ps_x[mm]", "ps_y[mm]",  "DPIx", "DPIy"};
     f.write(header);
 
     vector<string> a_line {8};
@@ -132,28 +132,30 @@ int main(int ac, char* av[])
               }
           }
 
-          pair<bool, string> im_type = mw::MwImage::is_image(t);
+          pair<bool, string> file_type = mw::MwImage::is_image(t);
 
 
-          if (!im_type.first) {
+          if (!file_type.first) {
              // if not an image type
               if (verbose)
               {
-                fmt::print(" not an image: {}\n",  im_type.second);
+                fmt::print(" not an image: {}\n",  file_type.second);
               }
              continue;
-          }
+          }                    
+
+          string img_type {file_type.second};
 
           if (!file_types.empty())
           {
               // if file_types provided by the user, check if we have
               // one of the types requested
-              if (std::find(file_types.begin(), file_types.end(), im_type.second) == file_types.end())
+              if (std::find(file_types.begin(), file_types.end(), img_type) == file_types.end())
               {
                   // not found, then continue
                   if (verbose)
                   {
-                    fmt::print(" image found but not of interest: {}\n",  im_type.second);
+                    fmt::print(" image found but not of interest: {}\n",  img_type);
                   }
                   continue;
               }
@@ -165,35 +167,48 @@ int main(int ac, char* av[])
           // that uses ImageMagick. This assures that our image
           // is good, not damaged for example.
 
-          mw::MwImage::uptr img_ptr {new mw::MwImage{}};
+          const mw::MwResolution *res;
 
-          if (!mw::MwImage::is_image(t, img_ptr))
+          if (fast_scan == false)
           {
-              if (verbose)
+              mw::MwImage::uptr img_ptr {new mw::MwImage{}};
+
+              if (!mw::MwImage::is_image(t, img_ptr))
               {
-                fmt::print("ERROR rading: {}. skipping ...", t);
+                  if (verbose)
+                  {
+                    fmt::print("ERROR rading: {}. skipping ...", t);
+                  }
+                  continue;
               }
-              continue;
+
+              img_type =  img_ptr->getType();
+
+              img_ptr->readProperties();
+
+              res = &img_ptr->getResolution();
+
           }
 
-          img_ptr->readProperties();
-
-          const mw::MwResolution & res = img_ptr->getResolution();
-
           a_line[0] = "\""+in_path.string()+"\"";
-          a_line[1] = "\""+img_ptr->getPath().string()+"\"";
-          a_line[2] = img_ptr->getType();
-          a_line[3] = to_string(img_ptr->getDiskSize());
-          a_line[4] = to_string(res.getPS()[0]);
-          a_line[5] = to_string(res.getPS()[1]);
-          a_line[6] = to_string(res.getDPI()[0]);
-          a_line[7] = to_string(res.getDPI()[1]);
+          a_line[1] = "\""+t.string()+"\"";
+          a_line[2] = img_type;
+          a_line[3] = to_string(mw::fs::get_file_size(t));
+
+
+          if (fast_scan == false)
+          {
+              a_line[4] = to_string(res->getPS()[0]);
+              a_line[5] = to_string(res->getPS()[1]);
+              a_line[6] = to_string(res->getDPI()[0]);
+              a_line[7] = to_string(res->getDPI()[1]);
+          }
 
           f.write(a_line);
 
           if (verbose)
           {
-            fmt::print(" is image: {}.\n",  img_ptr->magick());
+            fmt::print(" is image: {}.\n",  img_type);
             fmt::print("{}\n", mw::join(a_line));
           }
 
