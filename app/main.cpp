@@ -81,6 +81,7 @@ int main(int ac, char* av[])
       //vector<path> found_paths = mw::fs::get_all_paths(in_dir, true);
       vector<path> found_paths = mw::fs::get_all_paths_fts(in_dir, true);
       all_paths.push_back(make_pair(path(in_dir), found_paths));
+     // all_paths.push_back(make_pair(in_dir,vector<path>{"/media/sf_D_DRIVE/dcm_for_tests/ding/b/14.07-8.08.11/DICOM/PA000001/ST000001/SE000001/IM000001"}));
       totalPathNo += found_paths.size();
     }
 
@@ -167,7 +168,10 @@ int main(int ac, char* av[])
           // that uses ImageMagick. This assures that our image
           // is good, not damaged for example.
 
-          const mw::MwResolution *res;
+          a_line[0] = "\""+in_path.string()+"\"";
+          a_line[1] = "\""+t.string()+"\"";
+          a_line[2] = img_type;
+          a_line[3] = to_string(mw::fs::get_file_size(t));
 
           if (fast_scan == false)
           {
@@ -186,23 +190,16 @@ int main(int ac, char* av[])
 
               img_ptr->readProperties();
 
-              res = &img_ptr->getResolution();
+              const mw::MwResolution res = img_ptr->getResolution();
 
+              a_line[4] = to_string(res.getPS()[0]);
+              a_line[5] = to_string(res.getPS()[1]);
+              a_line[6] = to_string(res.getDPI()[0]);
+              a_line[7] = to_string(res.getDPI()[1]);
           }
 
-          a_line[0] = "\""+in_path.string()+"\"";
-          a_line[1] = "\""+t.string()+"\"";
-          a_line[2] = img_type;
-          a_line[3] = to_string(mw::fs::get_file_size(t));
 
 
-          if (fast_scan == false)
-          {
-              a_line[4] = to_string(res->getPS()[0]);
-              a_line[5] = to_string(res->getPS()[1]);
-              a_line[6] = to_string(res->getDPI()[0]);
-              a_line[7] = to_string(res->getDPI()[1]);
-          }
 
           f.write(a_line);
 

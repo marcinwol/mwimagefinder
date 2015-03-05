@@ -7,19 +7,20 @@
 
 #include <chrono>
 #include <ctime>
-
+#include <string>
 
 
 #include <Magick++.h>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
+
 
 #include "mwpath.h"
 #include "mwresolution.h"
 #include "utils.h"
 
 #include "../ext/filesignature.h"
+#include "../ext/format.h"
 
 namespace mw {
 
@@ -76,7 +77,7 @@ namespace mw {
 
     void calcResolution();
 
-    const MwResolution & getResolution() const {return resolution;}
+    const MwResolution & getResolution() const;
 
     bool isDCM() const {return getType() == "DCM";}
 

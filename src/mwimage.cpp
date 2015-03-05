@@ -142,8 +142,8 @@ namespace mw {
         if (!spacing_values.empty()) {
 
 
-            ps_x = boost::lexical_cast<double>(spacing_values.at(0));
-            ps_y = boost::lexical_cast<double>(spacing_values.at(1));
+            ps_x = stod(spacing_values.at(0));
+            ps_y = stod(spacing_values.at(1));
 
         }
     } else {
@@ -163,7 +163,11 @@ namespace mw {
 
       this->resolution = mw::MwResolution(ps_x, ps_y);
 
+  }
 
+  const  MwResolution & MwImage::getResolution() const
+  {
+      return resolution;
   }
 
 
