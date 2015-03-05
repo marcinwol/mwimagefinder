@@ -46,6 +46,11 @@ Search for DCM, TIFF and JPEG image files in /media/dir1/ /home/m/dir2/. Save re
 mwimagefinder --in-dir /media/dir1/ /home/m/dir2/ --csv-file ./results.csv --file-type DCM,TIFF,JPEG 
 ```
 
+Fast (using only file signature, thus no pixel size nor resolution is detected) search for image files in the two folders:
+```
+mwimagefinder --in-dir /media/dir1/ /home/m/dir2/ -f
+```
+
 ## Example of csv file created
 
 The csv file shown below was a result of searching JPEG and DCM files in /media/sf_D_DRIVE/ and in "/home/m/dcm_for_tests"
