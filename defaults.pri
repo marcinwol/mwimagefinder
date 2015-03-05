@@ -7,14 +7,16 @@ QMAKE_CXXFLAGS += -std=c++1y
 
 
 
-INCLUDEPATH += /usr/include/ImageMagick
+#INCLUDEPATH += /usr/include/ImageMagick
+
+INCLUDEPATH += /opt/ImageMagick690/include/ImageMagick
+unix:!macx: LIBS += -L/opt/ImageMagick690/lib
+
 
 #INCLUDEPATH += /opt/boost_1_57_0
 #unix:!macx: LIBS += -L/opt/boost_1_57_0/stage/lib
 
-#INCLUDEPATH += /usr/include/boost
-#unix:!macx: LIBS += -L/usr/local/lib
-#unix:!macx: LIBS += -L/usr/lib/x86_64-linux-gnu
+
 
 unix:!macx: LIBS += -lMagick++
 unix:!macx: LIBS += -lMagickCore
