@@ -4,13 +4,13 @@ SRC_DIR = $$PWD
 
 #QMAKE_CXXFLAGS += -std=c++11
 QMAKE_CXXFLAGS += -std=c++1y
+QMAKE_CXXFLAGS += -DMAGICKCORE_QUANTUM_DEPTH=16
+QMAKE_CXXFLAGS += -DMAGICKCORE_HDRI_ENABLE=false
 
+INCLUDEPATH += /usr/include/ImageMagick
 
-
-#INCLUDEPATH += /usr/include/ImageMagick
-
-INCLUDEPATH += /opt/ImageMagick690/include/ImageMagick
-unix:!macx: LIBS += -L/opt/ImageMagick690/lib
+#INCLUDEPATH += /opt/ImageMagick690/include/ImageMagick
+#unix:!macx: LIBS += -L/opt/ImageMagick690/lib
 
 
 #INCLUDEPATH += /opt/boost_1_57_0
