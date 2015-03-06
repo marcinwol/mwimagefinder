@@ -78,10 +78,8 @@ int main(int ac, char* av[])
 
     for (const string & in_dir : in_dirs)
     {
-      //vector<path> found_paths = mw::fs::get_all_paths(in_dir, true);
       vector<path> found_paths = mw::fs::get_all_paths_fts(in_dir, true);
-      all_paths.push_back(make_pair(path(in_dir), found_paths));
-     // all_paths.push_back(make_pair(in_dir,vector<path>{"/media/sf_D_DRIVE/dcm_for_tests/ding/b/14.07-8.08.11/DICOM/PA000001/ST000001/SE000001/IM000001"}));
+      all_paths.push_back(make_pair(path(in_dir), found_paths));    
       totalPathNo += found_paths.size();
     }
 

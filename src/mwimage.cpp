@@ -19,8 +19,6 @@ namespace mw {
   MwImage::MwImage(const Magick::Image & image_, const string & i_path)
     :Magick::Image(image_)
   {
-    //const Magick::Options * opt = image_.constOptions();
-    //img_path = mw::MwPath(opt->fileName());
       img_path = mw::MwPath(i_path);
   }
 
@@ -238,19 +236,9 @@ namespace mw {
     try
     {
 
-
       Magick::Image img ;
 
-  //    auto start_time = std::chrono::high_resolution_clock::now();
       img.ping(img_path_.string());
-//      auto end_time = std::chrono::high_resolution_clock::now();
-//
-      //auto e_time = end_time - start_time;
-
-     // auto t = std::chrono::duration_cast<std::chrono::milliseconds>(e_time);
-
-    //  std::cout << img_path_ << "time " << t.count() << " to run.\n";
-
 
       if (pimage_)
       {
