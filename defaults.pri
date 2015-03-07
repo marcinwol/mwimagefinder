@@ -9,9 +9,6 @@ QMAKE_CXXFLAGS += -DMAGICKCORE_HDRI_ENABLE=false
 
 INCLUDEPATH += /usr/include/ImageMagick
 
-#INCLUDEPATH += /opt/ImageMagick690/include/ImageMagick
-#unix:!macx: LIBS += -L/opt/ImageMagick690/lib
-
 
 #INCLUDEPATH += /opt/boost_1_57_0
 #unix:!macx: LIBS += -L/opt/boost_1_57_0/stage/lib

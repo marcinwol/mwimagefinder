@@ -4,10 +4,12 @@ CONFIG   += console
 
 CONFIG   -= app_bundle
 CONFIG   -= qt
+CONFIG += staticlib
+
 
 TEMPLATE = lib
 
-TARGET = myapp
+TARGET = mwapp
 
 SOURCES += myclass.cpp \
     programoptions.cpp \
