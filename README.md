@@ -100,7 +100,7 @@ cd mwimagefinder
 
 #### Create Makefile and compile
 ```bash
-qmake-qt5 && make CONFIG+=fedora
+qmake-qt5 CONFIG+=fedora && make
 ````
 
 #### Install in /opt/mwimagefinder
