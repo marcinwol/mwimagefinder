@@ -62,9 +62,9 @@ The csv file shown below was a result of searching JPEG and DCM files in /media/
 |"/home/m/dcm_for_tests"|"/home/m/dcm_for_tests/0001x-no-phi.dcm"|DCM|0.880000|0.143000|0.143000|170.629371|170.629371|
 |"/home/m/dcm_for_tests"|"/home/m/dcm_for_tests/0002x-no-phi.dcm"|DCM|0.220000|0.143000|0.143000|170.629371|170.629371|
 
-## Compilation and installation 
+## Compilation and installation (Ubuntu 14.04)
 
-#### Dependencies (Ubuntu 14.04):
+#### Dependencies:
 ```bash
 sudo apt-get install build-essential qt5-default libmagick++-dev libboost-filesystem1.55-dev libboost-program-options1.55-dev libboost-regex1.55-dev
 ```
@@ -85,3 +85,25 @@ qmake && make
 qmake && sudo make install
 ```
 
+## Compilation and installation (Fedora 21)
+
+#### Dependencies:
+```bash
+su -c "dnf install make automake gcc gcc-c++ qt5-qtbase-devel ImageMagick-c++-devel boost-devel"
+```
+
+#### Get the source code
+```bash
+git clone https://github.com/marcinwol/mwimagefinder.git
+cd mwimagefinder
+```
+
+#### Create Makefile and compile
+```bash
+qmake-qt5 && make CONFIG+=fedora
+````
+
+#### Install in /opt/mwimagefinder
+```bash
+qmake-qt5 && sudo make install
+```

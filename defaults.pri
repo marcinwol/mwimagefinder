@@ -7,16 +7,22 @@ QMAKE_CXXFLAGS += -std=c++1y
 QMAKE_CXXFLAGS += -DMAGICKCORE_QUANTUM_DEPTH=16
 QMAKE_CXXFLAGS += -DMAGICKCORE_HDRI_ENABLE=false
 
-INCLUDEPATH += /usr/include/ImageMagick
 
+fedora {
+    message("ImageMagick linking paths for Fedora")
 
-#INCLUDEPATH += /opt/boost_1_57_0
-#unix:!macx: LIBS += -L/opt/boost_1_57_0/stage/lib
+    INCLUDEPATH += /usr/include/ImageMagick-6
 
+    unix:!macx: LIBS += -lMagick++-6.Q16
+    unix:!macx: LIBS += -lMagickCore-6.Q16
+} else {
+    message("ImageMagick linking paths for Ubuntu")
 
+    INCLUDEPATH += /usr/include/ImageMagick
 
-unix:!macx: LIBS += -lMagick++
-unix:!macx: LIBS += -lMagickCore
+    unix:!macx: LIBS += -lMagick++
+    unix:!macx: LIBS += -lMagickCore
+}
 
 unix:!macx: LIBS += -lboost_system
 unix:!macx: LIBS += -lboost_filesystem
