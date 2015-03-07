@@ -105,5 +105,5 @@ qmake-qt5 CONFIG+=fedora && make
 
 #### Install in /opt/mwimagefinder
 ```bash
-qmake-qt5 && sudo make install
+qmake-qt5 && su -c "make install"
 ```
