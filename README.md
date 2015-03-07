@@ -61,3 +61,19 @@ The csv file shown below was a result of searching JPEG and DCM files in /media/
 |"/home/m/dcm_for_tests"|"/home/m/dcm_for_tests/0000b-no-phi.dcm"|DCM|1.400000|0.143000|0.143000|170.629371|170.629371|
 |"/home/m/dcm_for_tests"|"/home/m/dcm_for_tests/0001x-no-phi.dcm"|DCM|0.880000|0.143000|0.143000|170.629371|170.629371|
 |"/home/m/dcm_for_tests"|"/home/m/dcm_for_tests/0002x-no-phi.dcm"|DCM|0.220000|0.143000|0.143000|170.629371|170.629371|
+
+## Compilation and installation
+
+```bash
+sudo apt-get install build-essential qt5-default libmagick++-dev libboost-filesystem1.55-dev libboost-program-options1.55-dev libboost-regex1.55-dev
+git clone https://github.com/marcinwol/mwimagefinder.git
+cd mwimagefinder
+qmake && make
+qmake && sudo make install```
+
+The binary mwimagefinder should be installed in */opt/mwimagefinder/mwimagefinder*. To run in:
+
+```bash
+/opt/mwimagefinder/mwimagefinder --in-dir /media/dir1/ /home/m/dir2/ -f
+```
+
