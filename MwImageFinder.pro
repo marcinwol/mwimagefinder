@@ -15,3 +15,9 @@ app.depends = src
 
 OTHER_FILES += \
     defaults.pri
+
+
+binary.files += app/mwimagefinder
+binary.path = /opt/mwimagefinder
+INSTALLS += binary
+
