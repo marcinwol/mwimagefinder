@@ -31,23 +31,23 @@ mwimagefinder --file-type JPEG --csv-file  /tmp/found_JPEG.csv
 ```
 
 Search for JPEG and PNG files in the /tmp folder and save results in /tmp/found_JPEG.csv"
-```
+```bash
 mwimagefinder --file-type JPEG,PNG --csv-file  /tmp/found_JPEG.csv --in-dir /tmp/
 ```
 
 
 Search for all image files in /media/dir1/ /home/m/dir2/. Save results in /tmp/results.csv:
-```
+```bash
 mwimagefinder --in-dir /media/dir1/ /home/m/dir2/ --csv-file /tmp/results.csv
 ```
 
 Search for DCM, TIFF and JPEG image files in /media/dir1/ /home/m/dir2/. Save results in ./results.csv:
-```
+```bash
 mwimagefinder --in-dir /media/dir1/ /home/m/dir2/ --csv-file ./results.csv --file-type DCM,TIFF,JPEG 
 ```
 
 Fast (using only file signature, thus no pixel size nor resolution is detected) search for image files in the two folders:
-```
+```bash
 mwimagefinder --in-dir /media/dir1/ /home/m/dir2/ -f
 ```
 
@@ -64,23 +64,23 @@ The csv file shown below was a result of searching JPEG and DCM files in /media/
 
 ## Compilation and installation 
 
-### Dependencies (Ubuntu 14.04):
+#### Dependencies (Ubuntu 14.04):
 ```bash
 sudo apt-get install build-essential qt5-default libmagick++-dev libboost-filesystem1.55-dev libboost-program-options1.55-dev libboost-regex1.55-dev
 ```
 
-### Get the source code
+#### Get the source code
 ```bash
 git clone https://github.com/marcinwol/mwimagefinder.git
 cd mwimagefinder
 ```
 
-### Create Makefile and compile
+#### Create Makefile and compile
 ```bash
 qmake && make
 ````
 
-### Install in /opt/mwimagefinder
+#### Install in /opt/mwimagefinder
 ```bash
 qmake && sudo make install
 ```
