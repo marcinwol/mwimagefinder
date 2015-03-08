@@ -123,6 +123,9 @@ namespace  mw {
   std::string
   removeExtension(const std::string & filename);
 
+  std::string
+  extract_first_number(const std::string & in_str);
+
 
   /**
    * Remove an extenstion from a file name.

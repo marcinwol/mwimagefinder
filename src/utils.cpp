@@ -95,6 +95,30 @@ namespace  mw {
   }
 
 
+  /**
+   * Finds first float number in a given string.
+   *
+   * @brief extract_first_number
+   * @param in_str
+   * @return
+   */
+  std::string extract_first_number(const std::string & in_str)
+  {
+
+      boost::regex file_size_rgx(R"([+-]?(?=[.]?[0-9])[0-9]*(?:[.][0-9]*)?(?:[Ee][+-]?[0-9]+)?)");
+
+      boost::smatch match;
+
+      if (boost::regex_search(in_str, match, file_size_rgx))
+      {
+         return match.str();
+      }
+
+      return string {};
+
+  }
+
+
   namespace fs
   {
 

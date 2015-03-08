@@ -4,7 +4,9 @@
 #include <memory>
 
 #include <boost/program_options.hpp>
+#include <boost/regex.hpp>
 
+#include "utils.h"
 
 namespace mw {
 
