@@ -33,6 +33,11 @@ namespace mw {
             "for all images contained in it and its subfolders."
             "Once found, it generates an csv in the --in-dir folder"
             "or in the current working directory."
+            "\nExamples:\n "
+            "\n  mwimagefinder --file-type JPEG --csv-file  /tmp/found_JPEG.csv"
+            "\n  mwimagefinder /tmp/ -T JPEG,DCM --csv-file  /tmp/found_JPEG.csv"
+            "\n  mwimagefinder /tmp/ -T JPEG,DCM -v -f"
+            "\n  mwimagefinder /tmp/ -T JPEG,DCM -v -f -s \">2\""
             "\n";
 
     }
@@ -52,6 +57,8 @@ namespace mw {
                                     "fast scane using only file signature. Dont use imagemagick")
                 ("path-file,p", value<string>(),
                                 "files to store image paths found")
+                ("file-size,s", value<string>(),
+                                    "Limit search to files of given size [MB], e.g.: \">1\" or \"<5\" ")
                 ("csv-file,C", value<string>(),
                               "output csv file path");
 

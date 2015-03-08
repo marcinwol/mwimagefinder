@@ -37,6 +37,7 @@ int main(int ac, char* av[])
     path path_file            {po.get<string>("path-file")};
     path out_csv              {po.get<string>("csv-file")};
     string file_type          {po.get<string>("file-type")};
+    string file_size          {po.get<string>("file-size")};
     vector<string> file_types {mw::split(file_type, ',')};
     bool fast_scan            {po.get<bool>("fast")};
 
