@@ -57,9 +57,11 @@ int main(int ac, char* av[])
       }
     }
 
-    //po.get_file_size_option();
+    po.get_file_size_option();
 
-    //return 0;
+    // "10<>20"
+
+    return 0;
 
 
     if (out_csv.empty())
