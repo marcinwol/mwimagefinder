@@ -12,68 +12,77 @@ namespace mw {
     {
     public:
 
-        enum class IMG_SIZE_CMP {GL, LO, LE, GT, GE, NONE};
+        enum class IMG_SIZE_CMP {GL, LO, GT, NONE};
+
+        using size_opt =  pair<IMG_SIZE_CMP,vector<double>>;
+
 
         ImageFinderOptions(int acc, char *avv[]);
         virtual ~ImageFinderOptions();
 
-        size_t idx {0};
 
-        string matched_size {};
 
-        pair<IMG_SIZE_CMP,vector<double>>
-        get_file_size_option()
+        size_opt   get_file_size_option()
         {
-            string file_size = get<string>("file-size");
 
             IMG_SIZE_CMP size_cmp {IMG_SIZE_CMP::NONE};
-
             vector<double> found_size {};
 
-            if  ((idx = file_size.find("<>")) != string::npos)
+
+            string file_size = get<string>("file-size");
+
+            if (file_size.empty())
+            {
+               return make_pair(size_cmp, found_size);
+            }
+
+            size_t idx {0};
+
+            if  ((idx = file_size.find("-")) != 0 && idx != string::npos)
             {
 
               string sizes[2];
               sizes[0] = file_size.substr(0, idx);
-              sizes[1] = file_size.substr(idx+2,file_size.length());
+              sizes[1] = file_size.substr(idx+1, file_size.length());
 
-        //      cout << "found <>" <<" at "<< idx << endl;
-           //   cout << sizes[0] << " " << sizes[1] << endl;
+            // cout << "found <>" <<" at "<< idx << endl;
+          //   cout << sizes[0] << " " << sizes[1] << endl;
 
              size_cmp = IMG_SIZE_CMP::GL;
 
-             found_size.push_back(boost::lexical_cast<double>(sizes[0]));
-             found_size.push_back(boost::lexical_cast<double>(sizes[1]));
+
+             string size1 = mw::extract_first_number(sizes[0]);
+             string size2 = mw::extract_first_number(sizes[1]);
+
+             found_size.push_back(boost::lexical_cast<double>(size1));
+             found_size.push_back(boost::lexical_cast<double>(size2));
 
             }
-            else  if (file_size.find("<=") != string::npos)
+            else
             {
-             //   cout << "found <=" << endl;
-                size_cmp = IMG_SIZE_CMP::LE;
-                found_size.push_back(boost::lexical_cast<double>(file_size));
-            }
-            else if (file_size.find(">=") != string::npos)
-            {
-             //   cout << "found <=" << endl;
-                 size_cmp = IMG_SIZE_CMP::GE;
-                 found_size.push_back(boost::lexical_cast<double>(file_size));
-            }
-            else if (file_size.find("<") != string::npos)
-            {
-            //    cout << "found <" << endl;
-                   size_cmp = IMG_SIZE_CMP::LE;
-                   found_size.push_back(boost::lexical_cast<double>(file_size));
-            }
-            else if (file_size.find(">") != string::npos)
-            {
-           //     cout << "found >" << endl;
-                size_cmp = IMG_SIZE_CMP::GT;
-                found_size.push_back(boost::lexical_cast<double>(file_size));
+                string size_str = mw::extract_first_number(file_size);
+
+                double size_dbl = boost::lexical_cast<double>(size_str);
+
+                //  cout << size_dbl << endl;
+
+                if  (size_dbl < 0)
+                {
+                     size_cmp = IMG_SIZE_CMP::LO;
+                     size_dbl = - size_dbl;
+                }
+                else
+                {
+              //      cout << "GT optin" << endl;
+                  size_cmp = IMG_SIZE_CMP::GT;
+                }
+
+                found_size.push_back(size_dbl);
+
             }
 
-            matched_size = mw::extract_first_number(file_size);
 
-            return pair<IMG_SIZE_CMP,vector<double>>(size_cmp, found_size);
+            return  make_pair(size_cmp, found_size);
 
         }
 

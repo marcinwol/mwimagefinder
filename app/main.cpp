@@ -57,11 +57,7 @@ int main(int ac, char* av[])
       }
     }
 
-    po.get_file_size_option();
-
-    // "10<>20"
-
-    return 0;
+    mw::ImageFinderOptions::size_opt fsize= po.get_file_size_option();
 
 
     if (out_csv.empty())
@@ -138,6 +134,38 @@ int main(int ac, char* av[])
               }
           }
 
+
+          double img_size = mw::fs::get_file_size(t);
+
+          // use image file size option if provided
+          using size_cmp =  mw::ImageFinderOptions::IMG_SIZE_CMP;
+          if (fsize.first != size_cmp::NONE)
+          {
+              if (fsize.first == size_cmp::LO)
+              {
+                  if (img_size > fsize.second.at(0))
+                    {
+                      continue;
+                    }
+              }
+              else if (fsize.first == size_cmp::GT)
+              {
+                  if (img_size < fsize.second.at(0))
+                    {
+                      continue;
+                    }
+              }
+              else if (fsize.first == size_cmp::GL)
+                {
+                    if (img_size < fsize.second.at(0) || img_size > fsize.second.at(1))
+                      {
+                        continue;
+                      }
+                }
+          }
+
+
+
           pair<bool, string> file_type = mw::MwImage::is_image(t);
 
 
@@ -176,7 +204,7 @@ int main(int ac, char* av[])
           a_line[0] = "\""+in_path.string()+"\"";
           a_line[1] = "\""+t.string()+"\"";
           a_line[2] = img_type;
-          a_line[3] = to_string(mw::fs::get_file_size(t));
+          a_line[3] = to_string(img_size);
 
           if (fast_scan == false)
           {
