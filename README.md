@@ -30,6 +30,21 @@ Search for JPEG files in the current folder and save results in /tmp/found_JPEG.
 mwimagefinder --file-type JPEG --csv-file  /tmp/found_JPEG.csv
 ```
 
+Search for JPEG and TIFF files in the current folder smaller than 5 MB:
+```bash
+mwimagefinder --file-type JPEG,TIFF --file-size -5
+```
+
+Search for all image files in /media/dir1 larger than 10 MB:
+```bash
+mwimagefinder  --in-dir /media/dir1/ --file-size 10
+```
+
+Search for all image files in /media/dir1/ and /home/m/dir2/ of size between 2 and 8 MB:
+```bash
+mwimagefinder  --in-dir /media/dir1/ /home/m/dir2/ --file-size 2-8
+```
+
 Search for JPEG and PNG files in the /tmp folder and save results in /tmp/found_JPEG.csv"
 ```bash
 mwimagefinder --file-type JPEG,PNG --csv-file  /tmp/found_JPEG.csv --in-dir /tmp/
@@ -41,7 +56,7 @@ Search for all image files in /media/dir1/ /home/m/dir2/. Save results in /tmp/r
 mwimagefinder --in-dir /media/dir1/ /home/m/dir2/ --csv-file /tmp/results.csv
 ```
 
-Search for DCM, TIFF and JPEG image files in /media/dir1/ /home/m/dir2/. Save results in ./results.csv:
+Search for DCM, TIFF and JPEG image files in /media/dir1/ and /home/m/dir2/. Save results in ./results.csv:
 ```bash
 mwimagefinder --in-dir /media/dir1/ /home/m/dir2/ --csv-file ./results.csv --file-type DCM,TIFF,JPEG 
 ```
