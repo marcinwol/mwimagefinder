@@ -37,7 +37,8 @@ namespace mw {
             "\n  mwimagefinder --file-type JPEG --csv-file  /tmp/found_JPEG.csv"
             "\n  mwimagefinder /tmp/ -T JPEG,DCM --csv-file  /tmp/found_JPEG.csv"
             "\n  mwimagefinder /tmp/ -T JPEG,DCM -v -f"
-            "\n  mwimagefinder /tmp/ -T JPEG,DCM -v -f -s \">2\""
+            "\n  mwimagefinder /tmp/ -T JPEG,DCM -v -f -s 5"
+            "\n  mwimagefinder /tmp/ -T JPEG,DCM -v -f -s 2-5"
             "\n";
 
     }
