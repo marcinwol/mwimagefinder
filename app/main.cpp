@@ -106,6 +106,9 @@ int main(int ac, char* av[])
     // check if found files are images, i.e. if they
     // are recognized by ImageMagick++. If yes, then
     // read their properties and save to csv file.
+
+    set<string> prop_set {};
+
     for (size_t i = 0; i < all_paths.size(); ++i)
     {
 
@@ -139,6 +142,7 @@ int main(int ac, char* av[])
 
           // use image file size option if provided
           using size_cmp =  mw::ImageFinderOptions::IMG_SIZE_CMP;
+
           if (fsize.first != size_cmp::NONE)
           {
               if (fsize.first == size_cmp::LO)
@@ -229,6 +233,17 @@ int main(int ac, char* av[])
               a_line[5] = to_string(res.getPS()[1]);
               a_line[6] = to_string(res.getDPI()[0]);
               a_line[7] = to_string(res.getDPI()[1]);
+
+
+             const mw::MwImage::properties_map & props
+                 = img_ptr->getProperties();
+
+            for (const auto & kv: props)
+            {
+                 prop_set.insert(kv.first);
+            }
+
+
           }
 
 
@@ -246,6 +261,8 @@ int main(int ac, char* av[])
 
       } //  for (size_t j = 0; j < found_files.size(); ++j)
     } // for (size_t i = 0; i < all_paths.size(); ++i)
+
+    mw::print_iterable(prop_set);
 
 
 
