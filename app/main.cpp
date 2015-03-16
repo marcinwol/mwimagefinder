@@ -238,9 +238,17 @@ int main(int ac, char* av[])
              const mw::MwImage::properties_map & props
                  = img_ptr->getProperties();
 
+           a_line.erase(a_line.begin()+8, a_line.end());
+
             for (const auto & kv: props)
             {
-                 prop_set.insert(kv.first);
+                 string prop_name = kv.first;
+                 string prop_value = kv.second;
+                 replace(prop_name.begin(), prop_name.end(), '"', '\'');
+                 replace(prop_value.begin(), prop_value.end(), '"', '\'');
+                 a_line.emplace_back<string>(fmt::format("\"{}|{}\"",
+                                                         prop_name, prop_value));
+                 prop_set.insert(prop_name);
             }
 
 
@@ -262,7 +270,6 @@ int main(int ac, char* av[])
       } //  for (size_t j = 0; j < found_files.size(); ++j)
     } // for (size_t i = 0; i < all_paths.size(); ++i)
 
-    mw::print_iterable(prop_set);
 
 
 

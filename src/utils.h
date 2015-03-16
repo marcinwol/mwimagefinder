@@ -45,6 +45,9 @@ namespace  mw {
       std::cout << "\033[1;32m" << msg <<"\033[0m" << std::endl;
   }
 
+  std::string
+  replaceall(std::string str, const std::string& from, const std::string& to);
+
 
   /**
    * Splits a string on a given delim
