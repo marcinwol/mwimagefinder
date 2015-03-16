@@ -251,10 +251,7 @@ int main(int ac, char* av[])
                  prop_set.insert(prop_name);
             }
 
-
           }
-
-
 
 
           f.write(a_line);
@@ -270,12 +267,27 @@ int main(int ac, char* av[])
       } //  for (size_t j = 0; j < found_files.size(); ++j)
     } // for (size_t i = 0; i < all_paths.size(); ++i)
 
+    of.close();
+
 
 
 
     fmt::print("\n");
     fmt::print("Found {} images out of {} files analyzed\n", imgNo, totalPathNo);
     fmt::print("CSV file saved in: {}\n", out_csv);
+
+    fmt::print("Reorganizing the csv file to account for all image properties found\n");
+
+    string csv_line {};
+
+
+    ifstream ifs {out_csv.string()};
+
+    while(getline(ifs, csv_line))
+    {
+       cout << csv_line << endl;
+    }
+
 
     return 0;
 }
