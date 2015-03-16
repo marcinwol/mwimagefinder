@@ -281,7 +281,17 @@ int main(int ac, char* av[])
     string csv_line {};
 
 
-    ifstream ifs {out_csv.string()};
+    ifstream ifs                {out_csv.string()};
+    ofstream new_csv  {"/tmp/test.csv"};
+
+    mw::mwcsv_writer f2 {new_csv};
+
+    vector<string> new_header(header, header+8);
+    new_header.insert(new_header.end(), prop_set.begin(), prop_set.end());
+
+    f2.write(new_header);
+
+
 
     while(getline(ifs, csv_line))
     {
