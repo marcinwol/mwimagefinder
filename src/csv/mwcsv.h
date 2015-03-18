@@ -30,7 +30,8 @@ namespace mw {
 
     // overload function template for char[].
     template<typename T, int N>
-    void write(T (&elems) [N]) {
+    void write(T (&elems) [N])
+    {
        for (int i = 0; i < N - 1 ; ++i) {
            of << elems[i] << delim;
        }
@@ -43,6 +44,22 @@ namespace mw {
   protected:
     ostream & of;
     const char * delim;
+  };
+
+
+  class mwcsv_reader
+  {
+  public:
+    mwcsv_reader() = delete;
+    mwcsv_reader(ifstream & of_, const char * delim_ = ",");
+
+
+    virtual ~mwcsv_reader();
+
+  protected:
+    istream & ifs;
+    const char * delim;
+
   };
 
 

@@ -23,22 +23,31 @@ namespace mw {
   template void mwcsv_writer::write<>(const vector<string> & elems);
 
 
-
-
-
-
   // overload function for strings.
   void mwcsv_writer::write(const string & a_line) {
       of << a_line << endl;
   }
 
-
-
-
   mwcsv_writer::~mwcsv_writer()
   {
 
   }
+
+
+
+  mwcsv_reader::mwcsv_reader(ifstream & ifs_, const char *delim_)
+    :ifs (ifs_), delim {delim_}
+  {
+
+  }
+
+  mwcsv_reader::~mwcsv_reader()
+  {
+
+  }
+
+
+
 
 
 }

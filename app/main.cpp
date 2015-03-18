@@ -281,7 +281,7 @@ int main(int ac, char* av[])
     string csv_line {};
 
 
-    ifstream ifs                {out_csv.string()};
+    ifstream ifs      {out_csv.string()};
     ofstream new_csv  {"/tmp/test.csv"};
 
     mw::mwcsv_writer f2 {new_csv};
