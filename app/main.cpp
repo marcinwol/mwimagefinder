@@ -298,9 +298,17 @@ int main(int ac, char* av[])
 //    f2.write(new_header);
 
 
-    for (auto & l: all_lines)
+    for (const vector<string> & l: all_lines)
     {
-        mw::print_iterable(l);
+        map<string, string> pvs;
+        for (size_t i = 8; i < l.size(); ++i)
+        {
+            vector<string> pv = mw::split(l.at(i), '|');
+            pvs[pv.at(0)] = pv.at(1);
+        }
+
+        vector<string> new_line(l.begin(), l.begin()+7);
+
     }
 
 
