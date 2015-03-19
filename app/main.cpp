@@ -101,6 +101,7 @@ int main(int ac, char* av[])
     f.write(header);
 
     vector<string> a_line {8};
+    vector<vector<string>> all_lines;
 
 
     // check if found files are images, i.e. if they
@@ -246,6 +247,10 @@ int main(int ac, char* av[])
                  string prop_value = kv.second;
                  replace(prop_name.begin(), prop_name.end(), '"', '\'');
                  replace(prop_value.begin(), prop_value.end(), '"', '\'');
+
+                 boost::trim(prop_name);
+                 boost::trim(prop_value);
+
                  a_line.emplace_back<string>(fmt::format("\"{}|{}\"",
                                                          prop_name, prop_value));
                  prop_set.insert(prop_name);
@@ -255,6 +260,8 @@ int main(int ac, char* av[])
 
 
           f.write(a_line);
+
+          all_lines.push_back(a_line);
 
           if (verbose)
           {
@@ -278,25 +285,27 @@ int main(int ac, char* av[])
 
     fmt::print("Reorganizing the csv file to account for all image properties found\n");
 
-    string csv_line {};
-
-
-    ifstream ifs      {out_csv.string()};
-    ofstream new_csv  {"/tmp/test.csv"};
-
-    mw::mwcsv_writer f2 {new_csv};
-
-    vector<string> new_header(header, header+8);
-    new_header.insert(new_header.end(), prop_set.begin(), prop_set.end());
-
-    f2.write(new_header);
 
 
 
-    while(getline(ifs, csv_line))
+//    ofstream new_csv  {"/tmp/test.csv"};
+
+//    mw::mwcsv_writer f2 {new_csv};
+
+//    vector<string> new_header(header, header+8);
+//    new_header.insert(new_header.end(), prop_set.begin(), prop_set.end());
+
+//    f2.write(new_header);
+
+
+    for (auto & l: all_lines)
     {
-       cout << csv_line << endl;
+        mw::print_iterable(l);
     }
+
+
+
+
 
 
     return 0;

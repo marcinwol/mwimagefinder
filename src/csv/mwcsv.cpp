@@ -41,6 +41,11 @@ namespace mw {
 
   }
 
+  void mwcsv_reader::readlines()
+  {
+    lines = mw::readlines(ifs);
+  }
+
   mwcsv_reader::~mwcsv_reader()
   {
 

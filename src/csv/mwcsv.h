@@ -53,18 +53,28 @@ namespace mw {
     mwcsv_reader() = delete;
     mwcsv_reader(ifstream & of_, const char * delim_ = ",");
 
+    void readlines();
+
+
+    vector<string>::const_iterator begin () const
+    {
+        return lines.begin();
+    }
+
+    vector<string>::const_iterator end () const
+    {
+        return lines.end();
+    }
+
 
     virtual ~mwcsv_reader();
 
   protected:
     istream & ifs;
     const char * delim;
+    vector<string> lines;
 
   };
-
-
-
-
 
 
 }

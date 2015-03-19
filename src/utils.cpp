@@ -89,7 +89,8 @@ namespace  mw {
    * @param filename
    * @return
    */
-  std::string removeExtension(const bf::path & filename)
+  std::string
+  removeExtension(const bf::path & filename)
   {
     return removeExtension(filename.string());
   }
@@ -102,7 +103,8 @@ namespace  mw {
    * @param in_str
    * @return
    */
-  std::string extract_first_number(const std::string & in_str)
+  std::string
+  extract_first_number(const std::string & in_str)
   {
 
       boost::regex file_size_rgx(R"([+-]?(?=[.]?[0-9])[0-9]*(?:[.][0-9]*)?(?:[Ee][+-]?[0-9]+)?)");
@@ -128,6 +130,38 @@ namespace  mw {
       }
       return str;
   }
+
+
+  vector<string>
+  readlines(std::istream & in_file)
+  {
+      vector<string> lines;
+
+      string a_line;
+
+      while (getline(in_file, a_line))
+      {
+          lines.push_back(a_line);
+      }
+
+      return lines;
+  }
+
+  template <typename T>
+  std::vector<string>
+  readlines(const T & in_file)
+  {
+      stringstream ss;
+      ss << in_file;
+      ifstream ifs {ss.str()};
+      return readlines(ifs);
+  }
+
+
+  // Explicit instantiation of the above template
+  template std::vector<string> readlines<>(const string & in_file);
+  template std::vector<string> readlines<>(const bf::path & in_file);
+
 
 
   namespace fs
@@ -336,7 +370,8 @@ namespace  mw {
      * @param p
      * @return
      */
-    double get_file_size(const bf::path & p)
+    double
+    get_file_size(const bf::path & p)
     {
 
       double sizeMB = static_cast<double>(bf::file_size(p))/MEGABYTE();

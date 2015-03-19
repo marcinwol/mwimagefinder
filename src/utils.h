@@ -2,9 +2,10 @@
 #define UTILS1_H
 
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <vector>
-
+#include <string>
 
 #if GCC_VERSION > 40900
     #include <regex>
@@ -14,7 +15,7 @@
 
 
 
-#include <boost/filesystem.hpp>
+    #include <boost/filesystem.hpp>
 
 #include "../ext/infix_iterator.h"
 
@@ -84,16 +85,28 @@ namespace  mw {
     std::cout << "[";
     std::copy(elems.begin(), elems.end(),oiter);
     std::cout << "]" << std::endl;
-
-
   }
+
+
+
+  std::vector<string>
+  readlines(istream & in_file);
+
+
+  template <typename T>
+  std::vector<string>
+  readlines(const T & in_file);
+
+
+
 
   /**
    * Joints an interable into a string   using
    * given delim.
    */
   template<typename T>
-  std::string join(const T & elems, const  char * delim = ",")
+  std::string
+  join(const T & elems, const  char * delim = ",")
   {
       std::stringstream ss;
 
