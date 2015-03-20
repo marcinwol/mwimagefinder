@@ -288,14 +288,14 @@ int main(int ac, char* av[])
 
 
 
-//    ofstream new_csv  {"/tmp/test.csv"};
+    ofstream new_csv  {"/tmp/test.csv"};
 
-//    mw::mwcsv_writer f2 {new_csv};
+    mw::mwcsv_writer f2 {new_csv};
 
-//    vector<string> new_header(header, header+8);
-//    new_header.insert(new_header.end(), prop_set.begin(), prop_set.end());
+    vector<string> new_header(header, header+8);
+    new_header.insert(new_header.end(), prop_set.begin(), prop_set.end());
 
-//    f2.write(new_header);
+    f2.write(new_header);
 
 
     for (const vector<string> & l: all_lines)
@@ -303,12 +303,39 @@ int main(int ac, char* av[])
         map<string, string> pvs;
         for (size_t i = 8; i < l.size(); ++i)
         {
-            vector<string> pv = mw::split(l.at(i), '|');
-            pvs[pv.at(0)] = pv.at(1);
+            string cell_value = l.at(i);
+            cell_value.erase(0, 1);
+            cell_value.erase(cell_value.end()-1);
+            vector<string> pv = mw::split(cell_value, '|');
+            if (pv.size() > 1)
+            {
+                pvs[pv.at(0)] = pv.at(1);
+            }
+            else
+            {
+                pvs[pv.at(0)] = "";
+            }
+
         }
 
-        vector<string> new_line(l.begin(), l.begin()+7);
+        vector<string> new_line(l.begin(), l.begin()+8);
 
+        for (const string & key: prop_set)
+        {
+
+            if (pvs.find(key) != pvs.end())
+            {
+                cout << key << ":" << pvs[key] << endl;
+                new_line.push_back(fmt::format("\"{}\"", pvs[key]));
+            }
+            else
+            {
+                new_line.push_back(string{});
+            }
+
+        }
+
+        f2.write(new_line);
     }
 
 
