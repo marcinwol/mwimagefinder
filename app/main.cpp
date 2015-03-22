@@ -68,6 +68,11 @@ int main(int ac, char* av[])
          out_csv = path {current_path() / path("found_files.csv")};
     }
 
+    if (detailed == true)
+    {
+        fast_scan = false;
+    }
+
 
     cout << "out_csv: " << out_csv << endl;
 
@@ -99,9 +104,18 @@ int main(int ac, char* av[])
 
     mw::mwcsv_writer f {of};
 
-    string header[] = {"In_dir", "File", "Type", "Size[MB]",
-                       "ps_x[mm]", "ps_y[mm]",  "DPIx", "DPIy"};
+    vector<string> header {"In_dir", "File", "Type", "Size[MB]"};
+
+    if (fast_scan == false)
+    {
+      header.push_back("ps_x[mm]");
+      header.push_back("ps_y[mm]");
+      header.push_back("DPIx");
+      header.push_back("DPIy");
+    }
+
     f.write(header);
+
 
     vector<string> a_line {8};
     vector<vector<string>> all_lines;
@@ -300,8 +314,14 @@ int main(int ac, char* av[])
 
         mw::mwcsv_writer f2 {new_csv};
 
-        vector<string> new_header(header, header+8);
-        new_header.insert(new_header.end(), prop_set.begin(), prop_set.end());
+        vector<string> new_header = header;
+
+        for (const string & prop_name: prop_set)
+        {
+            new_header.push_back(fmt::format("\"{}\"", prop_name));
+        }
+
+
 
         f2.write(new_header);
 
@@ -309,6 +329,7 @@ int main(int ac, char* av[])
         for (const vector<string> & l: all_lines)
         {
             map<string, string> pvs;
+
             for (size_t i = 8; i < l.size(); ++i)
             {
                 string cell_value = l.at(i);
