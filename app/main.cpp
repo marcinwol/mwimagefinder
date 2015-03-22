@@ -3,6 +3,8 @@
 #include <vector>
 #include <algorithm>
 
+#define BOOST_NO_CXX11_SCOPED_ENUMS
+
 #include <boost/filesystem.hpp>
 
 #include "../ext/format.h"
@@ -288,7 +290,9 @@ int main(int ac, char* av[])
 
 
 
-    ofstream new_csv  {"/tmp/test.csv"};
+    path tmp_file = temp_directory_path() / unique_path();
+
+    ofstream new_csv  {tmp_file.string()};
 
     mw::mwcsv_writer f2 {new_csv};
 
@@ -304,9 +308,12 @@ int main(int ac, char* av[])
         for (size_t i = 8; i < l.size(); ++i)
         {
             string cell_value = l.at(i);
+
             cell_value.erase(0, 1);
             cell_value.erase(cell_value.end()-1);
+
             vector<string> pv = mw::split(cell_value, '|');
+
             if (pv.size() > 1)
             {
                 pvs[pv.at(0)] = pv.at(1);
@@ -325,7 +332,6 @@ int main(int ac, char* av[])
 
             if (pvs.find(key) != pvs.end())
             {
-                cout << key << ":" << pvs[key] << endl;
                 new_line.push_back(fmt::format("\"{}\"", pvs[key]));
             }
             else
@@ -338,10 +344,19 @@ int main(int ac, char* av[])
         f2.write(new_line);
     }
 
+    new_csv.close();
 
+    // if tmp file created, than substitite the csv file with full properites.
+    try
+    {
+        boost::filesystem::copy_file(path(tmp_file), out_csv, copy_option::overwrite_if_exists);
+    }
+    catch (filesystem_error & e)
+    {
+        cerr << e.what() << endl;
+    }
 
-
-
+    remove(tmp_file);
 
     return 0;
 }

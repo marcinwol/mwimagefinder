@@ -1,5 +1,5 @@
 
-#include "utils.h"
+#include "utils.h"unix:!macx: LIBS += -lboost_filesystem
 
 #include <errno.h>
 #include <fts.h>

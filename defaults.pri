@@ -24,7 +24,7 @@ fedora {
     unix:!macx: LIBS += -lMagickCore
 }
 
-unix:!macx: LIBS += -lboost_system
 unix:!macx: LIBS += -lboost_filesystem
+unix:!macx: LIBS += -lboost_system
 unix:!macx: LIBS += -lboost_regex
 unix:!macx: LIBS += -lboost_program_options
