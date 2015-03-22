@@ -38,33 +38,35 @@ namespace mw {
             "\n  mwimagefinder /tmp/ -T JPEG,DCM --csv-file  /tmp/found_JPEG.csv"
             "\n  mwimagefinder /tmp/ -T JPEG,DCM -v -f"
             "\n  mwimagefinder /tmp/ -T JPEG,DCM -v -f -s 5"
-            "\n  mwimagefinder /tmp/ -T JPEG,DCM -v -f -s 2-5"
+            "\n  mwimagefinder /tmp/ -T JPEG,DCM,TIFF -v -f -d -s 2-5"
             "\n";
 
     }
 
-     void ImageFinderOptions::add_options()
-        {
-            po->add_options()
-                ("help,h", value<bool>()->implicit_value(true),
-                          "produce help message")
-                ("in-dir,I",  value<vector<string>>()->multitoken(), "input folder")
-                ("out-dir,O", value<string>(), "output folder")
-                ("file-type,T", value<string>(),
-                                "file type to search, e.g. \"DMC,TIFF,JPEG\"")
-                ("verbose,v", value<bool>()->implicit_value(true),
-                                "verbose output")
-                ("fast,f", value<bool>()->implicit_value(true),
-                                    "fast scane using only file signature. Dont use imagemagick")
-                ("path-file,p", value<string>(),
-                                "files to store image paths found")
-                ("file-size,s", value<string>(),
-                                    "Limit search to files of given size [MB], e.g.: \">1\" or \"<5\" ")
-                ("csv-file,C", value<string>(),
-                              "output csv file path");
+    void ImageFinderOptions::add_options()
+    {
+        po->add_options()
+            ("help,h", value<bool>()->implicit_value(true),
+                      "produce help message")
+            ("in-dir,I",  value<vector<string>>()->multitoken(), "input folder")
+            ("out-dir,O", value<string>(), "output folder")
+            ("file-type,T", value<string>(),
+                            "file type to search, e.g. \"DMC,TIFF,JPEG\"")
+            ("verbose,v", bool_switch()->default_value(false),
+                            "verbose output")
+            ("fast,f", bool_switch()->default_value(false),
+                                "fast scan using only file signature. Dont use imagemagick")
+            ("detailed,d", bool_switch()->default_value(false),
+                                    "put all properties of images found into the csv files")
+            ("path-file,p", value<string>(),
+                            "files to store image paths found")
+            ("file-size,s", value<string>(),
+                                "Limit search to files of given size [MB], e.g.: 1 or -5")
+            ("csv-file,C", value<string>(),
+                          "output csv file path");
 
-            p->add("in-dir", -1);
-        }
+        p->add("in-dir", -1);
+    }
 
     ImageFinderOptions::~ImageFinderOptions()
     {

@@ -42,6 +42,7 @@ int main(int ac, char* av[])
     string file_size          {po.get<string>("file-size")};
     vector<string> file_types {mw::split(file_type, ',')};
     bool fast_scan            {po.get<bool>("fast")};
+    bool detailed             {po.get<bool>("detailed")};
 
     if (in_dirs.empty())
     {
@@ -241,22 +242,25 @@ int main(int ac, char* av[])
              const mw::MwImage::properties_map & props
                  = img_ptr->getProperties();
 
-           a_line.erase(a_line.begin()+8, a_line.end());
+             if (detailed == true)
+             {
+                 a_line.erase(a_line.begin()+8, a_line.end());
 
-            for (const auto & kv: props)
-            {
-                 string prop_name = kv.first;
-                 string prop_value = kv.second;
-                 replace(prop_name.begin(), prop_name.end(), '"', '\'');
-                 replace(prop_value.begin(), prop_value.end(), '"', '\'');
+                 for (const auto & kv: props)
+                 {
+                     string prop_name = kv.first;
+                     string prop_value = kv.second;
+                     replace(prop_name.begin(), prop_name.end(), '"', '\'');
+                     replace(prop_value.begin(), prop_value.end(), '"', '\'');
 
-                 boost::trim(prop_name);
-                 boost::trim(prop_value);
+                     boost::trim(prop_name);
+                     boost::trim(prop_value);
 
-                 a_line.emplace_back<string>(fmt::format("\"{}|{}\"",
-                                                         prop_name, prop_value));
-                 prop_set.insert(prop_name);
-            }
+                     a_line.emplace_back<string>(fmt::format("\"{}|{}\"",
+                                                             prop_name, prop_value));
+                     prop_set.insert(prop_name);
+                 }
+             }
 
           }
 
@@ -285,78 +289,80 @@ int main(int ac, char* av[])
     fmt::print("Found {} images out of {} files analyzed\n", imgNo, totalPathNo);
     fmt::print("CSV file saved in: {}\n", out_csv);
 
-    fmt::print("Reorganizing the csv file to account for all image properties found\n");
 
-
-
-
-    path tmp_file = temp_directory_path() / unique_path();
-
-    ofstream new_csv  {tmp_file.string()};
-
-    mw::mwcsv_writer f2 {new_csv};
-
-    vector<string> new_header(header, header+8);
-    new_header.insert(new_header.end(), prop_set.begin(), prop_set.end());
-
-    f2.write(new_header);
-
-
-    for (const vector<string> & l: all_lines)
+    if (detailed == true)
     {
-        map<string, string> pvs;
-        for (size_t i = 8; i < l.size(); ++i)
+        fmt::print("Reorganizing the csv file to account for all image properties found\n");
+
+        path tmp_file = temp_directory_path() / unique_path();
+
+        ofstream new_csv  {tmp_file.string()};
+
+        mw::mwcsv_writer f2 {new_csv};
+
+        vector<string> new_header(header, header+8);
+        new_header.insert(new_header.end(), prop_set.begin(), prop_set.end());
+
+        f2.write(new_header);
+
+
+        for (const vector<string> & l: all_lines)
         {
-            string cell_value = l.at(i);
-
-            cell_value.erase(0, 1);
-            cell_value.erase(cell_value.end()-1);
-
-            vector<string> pv = mw::split(cell_value, '|');
-
-            if (pv.size() > 1)
+            map<string, string> pvs;
+            for (size_t i = 8; i < l.size(); ++i)
             {
-                pvs[pv.at(0)] = pv.at(1);
-            }
-            else
-            {
-                pvs[pv.at(0)] = "";
+                string cell_value = l.at(i);
+
+                cell_value.erase(0, 1);
+                cell_value.erase(cell_value.end()-1);
+
+                vector<string> pv = mw::split(cell_value, '|');
+
+                if (pv.size() > 1)
+                {
+                    pvs[pv.at(0)] = pv.at(1);
+                }
+                else
+                {
+                    pvs[pv.at(0)] = "";
+                }
+
             }
 
+            vector<string> new_line(l.begin(), l.begin()+8);
+
+            for (const string & key: prop_set)
+            {
+
+                if (pvs.find(key) != pvs.end())
+                {
+                    new_line.push_back(fmt::format("\"{}\"", pvs[key]));
+                }
+                else
+                {
+                    new_line.push_back(string{});
+                }
+
+            }
+
+            f2.write(new_line);
         }
 
-        vector<string> new_line(l.begin(), l.begin()+8);
+        new_csv.close();
 
-        for (const string & key: prop_set)
+        // if tmp file created, than substitite the csv file with full properites.
+        try
         {
-
-            if (pvs.find(key) != pvs.end())
-            {
-                new_line.push_back(fmt::format("\"{}\"", pvs[key]));
-            }
-            else
-            {
-                new_line.push_back(string{});
-            }
-
+            boost::filesystem::copy_file(path(tmp_file), out_csv, copy_option::overwrite_if_exists);
+        }
+        catch (filesystem_error & e)
+        {
+            cerr << e.what() << endl;
         }
 
-        f2.write(new_line);
-    }
+        remove(tmp_file);
 
-    new_csv.close();
-
-    // if tmp file created, than substitite the csv file with full properites.
-    try
-    {
-        boost::filesystem::copy_file(path(tmp_file), out_csv, copy_option::overwrite_if_exists);
     }
-    catch (filesystem_error & e)
-    {
-        cerr << e.what() << endl;
-    }
-
-    remove(tmp_file);
 
     return 0;
 }

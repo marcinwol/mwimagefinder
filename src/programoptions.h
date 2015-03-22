@@ -39,6 +39,8 @@ namespace mw {
 
       virtual ~ProgramOptions();
 
+      variables_map get_vm() const {return vm;}
+
     protected:
       virtual void show_help();
       virtual void add_options() = 0;
