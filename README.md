@@ -14,7 +14,7 @@ The program was developed in a response to a growing need of working with large 
 
 mwimagefinder uses [ImageMagick](http://www.imagemagick.org/) for identifying image files, thus it supports all formats supported by ImageMagick. There are over 100 major image formats. For complete list of the files supported see [here](http://www.imagemagick.org/script/formats.php).
 
-Since ImageMagick format support depends on many external libraries (e.g. zlib) the best way to check which formats are support on your system is to use the following command:
+Since ImageMagick format support depends on many external libraries (e.g. zlib) the best way to check which formats which are supported on your system is to use the following command:
 ```
 identify -list format
 ```
