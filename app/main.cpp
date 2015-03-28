@@ -324,6 +324,7 @@ int main(int ac, char* av[])
 
               try
               {
+                fmt::print("Copying {} into {}\n", t, out_filename);
                 copy_file(t, out_filename, copy_option::overwrite_if_exists);
               }
               catch (filesystem_error & e)
