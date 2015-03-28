@@ -120,6 +120,17 @@ namespace  mw {
 
   }
 
+  bool
+  replace(std::string& str, const std::string& from, const std::string& to) {
+      size_t start_pos = str.find(from);
+      if(start_pos == std::string::npos)
+      {
+          return false;
+      }
+      str.replace(start_pos, from.length(), to);
+      return true;
+  }
+
 
   std::string
   replaceall(std::string str, const std::string& from, const std::string& to) {
@@ -166,6 +177,8 @@ namespace  mw {
 
   namespace fs
   {
+
+
 
 
 
@@ -380,6 +393,23 @@ namespace  mw {
 
     }
 
+
+    std::string
+    clean_file_path(const string & in_path,
+                    const boost::regex & rexp,
+                    const string & substr )
+    {
+        return boost::regex_replace(in_path, rexp, substr);
+    }
+
+
+    std::string
+    clean_file_path(const bf::path & in_path,
+                    const boost::regex & rexp,
+                    const string & substr )
+    {
+        return clean_file_path(in_path.string(), rexp, substr);
+    }
 
 
   }

@@ -46,6 +46,9 @@ namespace  mw {
       std::cout << "\033[1;32m" << msg <<"\033[0m" << std::endl;
   }
 
+  bool
+  replace(std::string& str, const std::string& from, const std::string& to);
+
   std::string
   replaceall(std::string str, const std::string& from, const std::string& to);
 
@@ -140,7 +143,7 @@ namespace  mw {
   removeExtension(const std::string & filename);
 
   std::string
-  extract_first_number(const std::string & in_str);
+  extract_first_number(const std::string & in_str);    
 
 
   /**
@@ -157,6 +160,8 @@ namespace  mw {
    */
   namespace fs
   {
+
+     const bool OVERWRITE_IF_EXIST {true};
 
      /** Scaning folder for all paths using fts_read linux method.
      *
@@ -189,6 +194,9 @@ namespace  mw {
     create_output_dir(const string & out_path,
                       bool remove_if_exist = false);
 
+    bool
+    create_output_dir(const bf::path & out_path, bool remove_if_exist);
+
     /**
      * Get file size in MB
      *
@@ -197,6 +205,16 @@ namespace  mw {
      * @return
      */
     double get_file_size(const bf::path & p);
+
+    std::string
+    clean_file_path(const string & in_path,
+                    const boost::regex & rexp = boost::regex {R"([\s_,\.\/]+)"},
+                    const string & substr = "_");
+    std::string
+    clean_file_path(const bf::path & in_path,
+                    const boost::regex & rexp = boost::regex {R"([\s_,\.\/]+)"},
+                    const string & substr = "_");
+
 
 
   }

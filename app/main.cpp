@@ -6,6 +6,7 @@
 #define BOOST_NO_CXX11_SCOPED_ENUMS
 
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include "../ext/format.h"
 
@@ -38,11 +39,15 @@ int main(int ac, char* av[])
     path out_dir              {po.get<string>("out-dir")};
     path path_file            {po.get<string>("path-file")};
     path out_csv              {po.get<string>("csv-file")};
+    path output_dir           {po.get<string>("out-dir")};
     string file_type          {po.get<string>("file-type")};
     string file_size          {po.get<string>("file-size")};
     vector<string> file_types {mw::split(file_type, ',')};
     bool fast_scan            {po.get<bool>("fast")};
     bool detailed             {po.get<bool>("detailed")};
+    bool copy_files           {!output_dir.empty()};
+
+
 
     if (in_dirs.empty())
     {
@@ -71,6 +76,11 @@ int main(int ac, char* av[])
     if (detailed == true)
     {
         fast_scan = false;
+    }
+
+    if (!mw::fs::create_output_dir(output_dir, mw::fs::OVERWRITE_IF_EXIST))
+    {
+        return 1;
     }
 
 
@@ -288,6 +298,40 @@ int main(int ac, char* av[])
             fmt::print(" is image: {}.\n",  img_type);
             fmt::print("{}\n", mw::join(a_line));
           }
+
+          if (copy_files)
+          {
+
+
+              string f_extension {boost::filesystem::extension(t)};
+
+              string t_str {t.string()};
+
+              mw::replace(t_str, in_path.string(),"");
+              mw::replace(t_str, f_extension,"");
+              t_str = mw::fs::clean_file_path(t_str);
+
+              string filename {t_str};
+              filename += "." + boost::algorithm::to_lower_copy(img_type);
+
+              path out_filename {output_dir / path(filename)};
+
+
+              // cout << t << endl;
+              // cout << mw::fs::clean_file_path(t_str) << endl;
+              // cout << out_filename << endl << endl;
+
+
+              try
+              {
+                copy_file(t, out_filename, copy_option::overwrite_if_exists);
+              }
+              catch (filesystem_error & e)
+              {
+                  cerr << e.what() << endl;
+              }
+          }
+
 
           ++imgNo;
 

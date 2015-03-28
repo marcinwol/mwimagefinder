@@ -49,7 +49,7 @@ namespace mw {
             ("help,h", value<bool>()->implicit_value(true),
                       "produce help message")
             ("in-dir,I",  value<vector<string>>()->multitoken(), "input folder")
-            ("out-dir,O", value<string>(), "output folder")
+            ("out-dir,O", value<string>(), "Location where the found images will be copied")
             ("file-type,T", value<string>(),
                             "file type to search, e.g. \"DMC,TIFF,JPEG\"")
             ("verbose,v", bool_switch()->default_value(false),
@@ -61,7 +61,7 @@ namespace mw {
             ("path-file,p", value<string>(),
                             "files to store image paths found")
             ("file-size,s", value<string>(),
-                                "Limit search to files of given size [MB], e.g.: 1 or -5")
+                                "Limit search to files of given size [MB], e.g.: 1 or -5")          
             ("csv-file,C", value<string>(),
                           "output csv file path");
 
