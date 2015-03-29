@@ -78,9 +78,13 @@ int main(int ac, char* av[])
         fast_scan = false;
     }
 
-    if (!mw::fs::create_output_dir(output_dir, mw::fs::OVERWRITE_IF_EXIST))
+
+    if (!output_dir.empty())
     {
-        return 1;
+        if (!mw::fs::create_output_dir(output_dir, mw::fs::OVERWRITE_IF_EXIST))
+        {
+            return 1;
+        }
     }
 
 
