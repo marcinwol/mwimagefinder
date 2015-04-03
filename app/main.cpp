@@ -97,14 +97,15 @@ int main(int ac, char* av[])
     size_t totalPathNo {0};
 
 
+    using fp_vetor = vector<mw::fs::found_path_info>;
+
     // read all paths from input folders into
     // one vector for paths
-    vector<pair<path,vector<path>>> all_paths {};
+    vector<pair<path,fp_vetor>> all_paths {};
 
     for (const string & in_dir : in_dirs)
     {
-      vector<path> found_paths =
-              mw::fs::get_all_paths_fts(in_dir, max_level, true);
+      fp_vetor found_paths =  mw::fs::get_all_paths_fts2(in_dir, max_level, true);
       all_paths.push_back(make_pair(path(in_dir), found_paths));    
       totalPathNo += found_paths.size();
     }
@@ -119,7 +120,7 @@ int main(int ac, char* av[])
 
     mw::mwcsv_writer f {of};
 
-    vector<string> header {"In_dir", "File", "Type", "Size[MB]"};
+    vector<string> header {"In_dir", "File", "Level", "Type", "Size[MB]"};
 
     if (fast_scan == false)
     {
@@ -132,7 +133,7 @@ int main(int ac, char* av[])
     f.write(header);
 
 
-    vector<string> a_line {8};
+    vector<string> a_line {9};
     vector<vector<string>> all_lines;
 
 
@@ -145,13 +146,15 @@ int main(int ac, char* av[])
     for (size_t i = 0; i < all_paths.size(); ++i)
     {
 
-      const pair<path, vector<path>> & found_paths = all_paths[i];
+      const pair<path, fp_vetor> & found_paths = all_paths[i];
       const path & in_path = found_paths.first;
-      const vector<path> & found_files = found_paths.second;
+      const fp_vetor & found_files = found_paths.second;
 
       for (size_t j = 0; j < found_files.size(); ++j)
       {
-          const path & t = found_files[j];
+          const mw::fs::found_path_info & ff = found_files[j];
+          const path & t = ff.fpath;
+          const int level = ff.fts_level;
 
           ++fileNo;
 
@@ -240,8 +243,9 @@ int main(int ac, char* av[])
 
           a_line[0] = "\""+in_path.string()+"\"";
           a_line[1] = "\""+t.string()+"\"";
-          a_line[2] = img_type;
-          a_line[3] = to_string(img_size);
+          a_line[2] = to_string(level);
+          a_line[3] = img_type;
+          a_line[4] = to_string(img_size);
 
           if (fast_scan == false)
           {
@@ -262,10 +266,10 @@ int main(int ac, char* av[])
 
               const mw::MwResolution res = img_ptr->getResolution();
 
-              a_line[4] = to_string(res.getPS()[0]);
-              a_line[5] = to_string(res.getPS()[1]);
-              a_line[6] = to_string(res.getDPI()[0]);
-              a_line[7] = to_string(res.getDPI()[1]);
+              a_line[5] = to_string(res.getPS()[0]);
+              a_line[6] = to_string(res.getPS()[1]);
+              a_line[7] = to_string(res.getDPI()[0]);
+              a_line[8] = to_string(res.getDPI()[1]);
 
 
              const mw::MwImage::properties_map & props
@@ -273,7 +277,7 @@ int main(int ac, char* av[])
 
              if (detailed == true)
              {
-                 a_line.erase(a_line.begin()+8, a_line.end());
+                 a_line.erase(a_line.begin()+9, a_line.end());
 
                  for (const auto & kv: props)
                  {
@@ -380,7 +384,7 @@ int main(int ac, char* av[])
         {
             map<string, string> pvs;
 
-            for (size_t i = 8; i < l.size(); ++i)
+            for (size_t i = 9; i < l.size(); ++i)
             {
                 string cell_value = l.at(i);
 
