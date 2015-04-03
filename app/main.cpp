@@ -40,6 +40,7 @@ int main(int ac, char* av[])
     path path_file            {po.get<string>("path-file")};
     path out_csv              {po.get<string>("csv-file")};
     path output_dir           {po.get<string>("out-dir")};
+    int max_level             {po.get<int>("max-level")};
     string file_type          {po.get<string>("file-type")};
     string file_size          {po.get<string>("file-size")};
     vector<string> file_types {mw::split(file_type, ',')};
@@ -96,14 +97,13 @@ int main(int ac, char* av[])
     size_t totalPathNo {0};
 
 
-
     // read all paths from input folders into
     // one vector for paths
     vector<pair<path,vector<path>>> all_paths {};
 
     for (const string & in_dir : in_dirs)
     {
-      vector<path> found_paths = mw::fs::get_all_paths_fts(in_dir, true);
+      vector<path> found_paths = mw::fs::get_all_paths_fts(in_dir, max_level, true);
       all_paths.push_back(make_pair(path(in_dir), found_paths));    
       totalPathNo += found_paths.size();
     }

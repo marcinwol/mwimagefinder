@@ -54,6 +54,8 @@ namespace mw {
                             "file type to search, e.g. \"DMC,TIFF,JPEG\"")
             ("verbose,v", bool_switch()->default_value(false),
                             "verbose output")
+            ("max-level,l", value<int>()->default_value(-1),
+                                "max level of input folder scan (set to 1 for not going into sub-folders")
             ("fast,f", bool_switch()->default_value(false),
                                 "fast scan using only file signature. Dont use imagemagick")
             ("detailed,d", bool_switch()->default_value(false),

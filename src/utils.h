@@ -172,10 +172,12 @@ namespace  mw {
      */
     int fts_dear_tree_scan(const string & in_path,
                                 vector<string> & found_paths,
+                                int max_level = -1,
                                 bool show_progress = false);
 
     vector<bf::path>
     get_all_paths_fts(const bf::path & in_path,
+                             int max_level = -1,
                              bool show_progress = false);
 
     /** Using boost::filesystem

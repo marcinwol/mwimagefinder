@@ -190,6 +190,7 @@ namespace  mw {
        */
       int fts_dear_tree_scan(const string & in_path,
                             vector<string> & found_paths,
+                            int max_level,
                             bool show_progress)
       {
 
@@ -220,6 +221,14 @@ namespace  mw {
 
           while ((node = fts_read(tree)))
           {
+
+
+              if (max_level != -1 && node->fts_level > max_level)
+              {
+                  continue;
+              }
+
+
               if (node->fts_level > 0 && node->fts_name[0] == '.')
               {
                   fts_set(tree, node, FTS_SKIP);
@@ -227,12 +236,15 @@ namespace  mw {
               }
               else if (node->fts_info & FTS_F)
               {
+
                   if (show_progress && (i % 100 == 0))
                   {
                       cout  << "\r" << "Read " << i << " files "
                             << "in " << in_path
                             << flush;
                   }
+
+                 //cout << node->fts_level << node->fts_path <<  endl;
 
                   ++i;
 
@@ -260,17 +272,22 @@ namespace  mw {
 
 
       vector<bf::path>
-      get_all_paths_fts(const bf::path & in_path, bool show_progress)
+      get_all_paths_fts(const bf::path & in_path,
+                        int max_level,
+                        bool show_progress)
       {
            vector<bf::path> paths;
            vector<string> paths_str;
 
            int status {1};
-           status = fts_dear_tree_scan(in_path.string(), paths_str, show_progress);
+
+           status = fts_dear_tree_scan(in_path.string(), paths_str,
+                                       max_level, show_progress);
 
            if (status == 0)
            {
                paths.reserve(paths_str.size());
+
                for (const string & a_path_str : paths_str)
                {
                    paths.push_back(bf::path {a_path_str});
