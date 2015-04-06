@@ -47,6 +47,7 @@ int main(int ac, char* av[])
     bool fast_scan            {po.get<bool>("fast")};
     bool detailed             {po.get<bool>("detailed")};
     bool copy_files           {!output_dir.empty()};
+    bool make_csv             {!po.get<bool>("no-csv")};
 
 
 
@@ -109,6 +110,9 @@ int main(int ac, char* av[])
       all_paths.push_back(make_pair(path(in_dir), found_paths));    
       totalPathNo += found_paths.size();
     }
+
+
+
 
 
     // save results to the output csv file
