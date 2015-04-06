@@ -18,6 +18,6 @@ OTHER_FILES += \
 
 
 binary.files += app/mwimagefinder
-binary.path = /opt/mwimagefinder
+binary.path = /opt/mwimage
 INSTALLS += binary
 
