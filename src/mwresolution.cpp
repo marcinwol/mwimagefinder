@@ -26,7 +26,7 @@ namespace mw {
 
     array<double, 2> MwResolution::getDPI() const
     {
-       return array<double, 2> {24.4/x, 24.4/y};
+       return array<double, 2> {25.4/x, 25.4/y};
     }
 
 
