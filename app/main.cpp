@@ -47,7 +47,7 @@ int main(int ac, char* av[])
     bool fast_scan            {po.get<bool>("fast")};
     bool detailed             {po.get<bool>("detailed")};
     bool copy_files           {!output_dir.empty()};
-    bool make_csv             {!po.get<bool>("no-csv")};
+    bool make_csv             {po.get<bool>("make-csv")};
 
 
 
@@ -116,25 +116,35 @@ int main(int ac, char* av[])
 
 
     // save results to the output csv file
-    ofstream of {out_csv.string()};
-    if (!of)
+    ofstream of;
+    unique_ptr<mw::mwcsv_writer> f_uptr;
+    vector<string> header;
+
+
+    if (make_csv)
     {
-      mw::errp(out_csv.string() + " creation failed!");
+        of.open(out_csv.string());
+
+        if (!of)
+        {
+          mw::errp(out_csv.string() + " creation failed!");
+        }
+
+        //mw::mwcsv_writer f {of};
+        f_uptr = unique_ptr<mw::mwcsv_writer>(new mw::mwcsv_writer {of});
+
+        header = vector<string> {"In_dir", "File", "Level", "Type", "Size[MB]"};
+
+        if (fast_scan == false)
+        {
+          header.push_back("ps_x[mm]");
+          header.push_back("ps_y[mm]");
+          header.push_back("DPIx");
+          header.push_back("DPIy");
+        }
+
+        f_uptr->write(header);
     }
-
-    mw::mwcsv_writer f {of};
-
-    vector<string> header {"In_dir", "File", "Level", "Type", "Size[MB]"};
-
-    if (fast_scan == false)
-    {
-      header.push_back("ps_x[mm]");
-      header.push_back("ps_y[mm]");
-      header.push_back("DPIx");
-      header.push_back("DPIy");
-    }
-
-    f.write(header);
 
 
     vector<string> a_line {9};
@@ -302,7 +312,10 @@ int main(int ac, char* av[])
           }
 
 
-          f.write(a_line);
+          if (make_csv)
+          {
+            f_uptr->write(a_line);
+          }
 
           all_lines.push_back(a_line);
 
@@ -359,10 +372,14 @@ int main(int ac, char* av[])
 
     fmt::print("\n");
     fmt::print("Found {} images out of {} files analyzed\n", imgNo, totalPathNo);
-    fmt::print("CSV file saved in: {}\n", out_csv);
+
+    if (make_csv)
+    {
+        fmt::print("CSV file saved in: {}\n", out_csv);
+    }
 
 
-    if (detailed == true)
+    if (detailed == true && make_csv == true)
     {
         fmt::print("Reorganizing the csv file to account for all image properties found\n");
 

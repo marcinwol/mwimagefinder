@@ -60,7 +60,7 @@ namespace mw {
                                 "fast scan using only file signature. Dont use imagemagick")
             ("detailed,d", bool_switch()->default_value(false),
                                     "put all properties of images found into the csv files")
-            ("no-csv", bool_switch()->default_value(false),
+            ("make-csv", bool_switch()->default_value(false),
                                     "do not create output csv file")
             ("path-file,p", value<string>(),
                             "files to store image paths found")
