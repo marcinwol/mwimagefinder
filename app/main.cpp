@@ -137,7 +137,7 @@ int main(int ac, char* av[])
         //mw::mwcsv_writer f {of};
         f_uptr = unique_ptr<mw::mwcsv_writer>(new mw::mwcsv_writer {of});
 
-        header = vector<string> {"In_dir", "File", "Level", "Type", "Size[MB]"};
+        header = vector<string> {"In_dir", "Filepath","Filename", "Level", "Type", "Size[MB]"};
 
         if (fast_scan == false)
         {
@@ -151,7 +151,7 @@ int main(int ac, char* av[])
     }
 
 
-    vector<string> a_line {9};
+    vector<string> a_line {10};
     vector<vector<string>> all_lines;
 
 
@@ -261,9 +261,10 @@ int main(int ac, char* av[])
 
           a_line[0] = "\""+in_path.string()+"\"";
           a_line[1] = "\""+t.string()+"\"";
-          a_line[2] = to_string(level);
-          a_line[3] = img_type;
-          a_line[4] = to_string(img_size);
+          a_line[2] = "\""+t.filename().string()+"\"";
+          a_line[3] = to_string(level);
+          a_line[4] = img_type;
+          a_line[5] = to_string(img_size);
 
           if (fast_scan == false)
           {
@@ -284,10 +285,10 @@ int main(int ac, char* av[])
 
               const mw::MwResolution res = img_ptr->getResolution();
 
-              a_line[5] = to_string(res.getPS()[0]);
-              a_line[6] = to_string(res.getPS()[1]);
-              a_line[7] = to_string(res.getDPI()[0]);
-              a_line[8] = to_string(res.getDPI()[1]);
+              a_line[6] = to_string(res.getPS()[0]);
+              a_line[7] = to_string(res.getPS()[1]);
+              a_line[8] = to_string(res.getDPI()[0]);
+              a_line[9] = to_string(res.getDPI()[1]);
 
 
              const mw::MwImage::properties_map & props
@@ -295,7 +296,7 @@ int main(int ac, char* av[])
 
              if (detailed == true)
              {
-                 a_line.erase(a_line.begin()+9, a_line.end());
+                 a_line.erase(a_line.begin() + 10, a_line.end());
 
                  for (const auto & kv: props)
                  {
@@ -409,7 +410,7 @@ int main(int ac, char* av[])
         {
             map<string, string> pvs;
 
-            for (size_t i = 9; i < l.size(); ++i)
+            for (size_t i = 10; i < l.size(); ++i)
             {
                 string cell_value = l.at(i);
 
