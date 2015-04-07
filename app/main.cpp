@@ -72,7 +72,11 @@ int main(int ac, char* av[])
 
     if (out_csv.empty())
     {
-         out_csv = path {current_path() / path("found_files.csv")};
+         out_csv = path {current_path() / path("found_files.csv")};        
+    }
+    else
+    {
+        make_csv = true;
     }
 
     if (detailed == true)
