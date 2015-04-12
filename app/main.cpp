@@ -45,9 +45,10 @@ int main(int ac, char* av[])
     string file_size          {po.get<string>("file-size")};
     vector<string> file_types {mw::split(file_type, ',')};
     bool fast_scan            {po.get<bool>("fast")};
-    bool detailed             {po.get<bool>("detailed")};
+    bool detailed             {po.get<bool>("detailed")};    
     bool copy_files           {!output_dir.empty()};
     bool make_csv             {po.get<bool>("make-csv")};
+    bool change_name          {!po.get<bool>("org-name")};
 
 
 
@@ -337,15 +338,33 @@ int main(int ac, char* av[])
               string f_extension {boost::filesystem::extension(t)};
 
               string t_str {t.string()};
+              path org_filename {t.filename()};
+
+
 
               mw::replace(t_str, in_path.string(),"");
               mw::replace(t_str, f_extension,"");
+
+
+
               t_str = mw::fs::clean_file_path(t_str);
 
               string filename {t_str};
               filename += "." + boost::algorithm::to_lower_copy(img_type);
 
-              path out_filename {output_dir / path(filename)};
+
+              path out_filename {};
+
+              if (!change_name)
+              {
+                  out_filename = output_dir / org_filename;
+              }
+              else
+              {
+                  // new name for the copied file
+                  out_filename = output_dir / path(filename);
+              }
+
 
 
               // cout << t << endl;
@@ -355,8 +374,25 @@ int main(int ac, char* av[])
 
               try
               {
-                fmt::print("Copying {} into {}\n", t, out_filename);
-                copy_file(t, out_filename, copy_option::overwrite_if_exists);
+                string msg = fmt::format("{}/{}: Copying {} into {} ...",
+                                         fileNo, totalPathNo,
+                                         t, out_filename);
+
+                cout  << "\r" << msg << flush;
+
+                if (boost::filesystem::is_regular_file(out_filename))
+                {
+                    fmt::print_colored(fmt::RED,
+                                       "\nFile {} already exists. Skipping.\n",
+                                       out_filename.string());
+                }
+                else
+                {
+                    copy_file(t, out_filename, copy_option::overwrite_if_exists);
+                    cout  << "success" << flush;
+                }
+
+
               }
               catch (filesystem_error & e)
               {

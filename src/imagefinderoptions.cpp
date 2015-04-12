@@ -39,6 +39,7 @@ namespace mw {
             "\n  mwimagefinder /tmp/ -T JPEG,DCM -v -f"
             "\n  mwimagefinder /tmp/ -T JPEG,DCM -v -f -s 5"
             "\n  mwimagefinder /tmp/ -T JPEG,DCM,TIFF -v -f -d -s 2-5"
+            "\n  mwimagefinder /tmp/ -T DCM -s 2-5 -d -o ~/Desktop/found_images"
             "\n";
 
     }
@@ -62,6 +63,8 @@ namespace mw {
                                     "put all properties of images found into the csv files")
             ("make-csv", bool_switch()->default_value(false),
                                     "do not create output csv file")
+            ("org-name", bool_switch()->default_value(false),
+                                    "uses orginal file name, without as it is")
             ("path-file,p", value<string>(),
                             "files to store image paths found")
             ("file-size,s", value<string>(),
