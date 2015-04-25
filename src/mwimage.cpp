@@ -218,7 +218,7 @@ namespace mw {
   MwImage::~MwImage()
   {
 
-  }
+      }
 
   ostream& operator<<(ostream& os, const MwImage & img)
   {
