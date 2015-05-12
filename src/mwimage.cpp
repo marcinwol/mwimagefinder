@@ -115,7 +115,7 @@ namespace mw {
     // first find if we have pixel spacing propertie
     for (const auto & kv: this->properties)
     {       
-        if (boost::iequals(kv.first, PIXEL_SPACING_KEY_WORD))
+        if (boost::icontains(kv.first, PIXEL_SPACING_KEY_WORD))
         {
             found_properties.push_back(kv);
         }
