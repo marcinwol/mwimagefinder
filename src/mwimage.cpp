@@ -114,16 +114,16 @@ namespace mw {
 
     // first find if we have pixel spacing propertie
     for (const auto & kv: this->properties)
-    {
-        if (boost::icontains(kv.first, PIXEL_SPACING_KEY_WORD))
+    {       
+        if (boost::iequals(kv.first, PIXEL_SPACING_KEY_WORD))
         {
             found_properties.push_back(kv);
         }
     }
 
 
-
-    if (!found_properties.empty()) {
+    if (!found_properties.empty())
+    {
         // found PixelSpacing propertie,
         // most likly in a dicom file
         string pixel_spacing;
@@ -131,18 +131,18 @@ namespace mw {
         pixel_spacing = found_properties.at(0).second;
         vector<string> spacing_values = mw::split(pixel_spacing, '\\');
 
+        //cout << "DD" << pixel_spacing << endl;
+
         // trim whitespace
         std::for_each(spacing_values.begin(),
                      spacing_values.end(),
                      [](string & v){boost::trim(v);});
 
         //my::print_iterable(spacing_values);
-        if (!spacing_values.empty()) {
-
-
+        if (!spacing_values.empty())
+        {
             ps_x = stod(spacing_values.at(0));
             ps_y = stod(spacing_values.at(1));
-
         }
     } else {
         // no PixelSpacing property. probably not dicom
