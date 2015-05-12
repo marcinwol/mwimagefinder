@@ -466,7 +466,7 @@ int main(int ac, char* av[])
 
             }
 
-            vector<string> new_line(l.begin(), l.begin()+9);
+            vector<string> new_line(l.begin(), l.begin()+10);
 
             for (const string & key: prop_set)
             {
