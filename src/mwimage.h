@@ -27,6 +27,7 @@ namespace mw {
   using namespace boost::filesystem;
 
   static const string PIXEL_SPACING_KEY_WORD = "dcm:pixelspacing";
+  static const string PIXEL_SPACING_KEY_WORD2 = "dcm:imagerpixelspacing";
 
   static const double INCH = 25.4; // 1 inch = 25.4 milimieters
 
