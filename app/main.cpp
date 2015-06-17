@@ -378,7 +378,9 @@ int main(int ac, char* av[])
                                          fileNo, totalPathNo,
                                          t, out_filename);
 
+                cout  << "\33[2K\r";
                 cout  << "\r" << msg << flush;
+
 
                 if (boost::filesystem::is_regular_file(out_filename))
                 {
