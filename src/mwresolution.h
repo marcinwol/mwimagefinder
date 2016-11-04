@@ -11,7 +11,7 @@
 #include <memory>
 
 #include <Magick++.h>
-#include <magick/MagickCore.h>
+#include <MagickCore/MagickCore.h>
 
 #include <boost/optional.hpp>
 #include <boost/filesystem.hpp>

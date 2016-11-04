@@ -165,7 +165,8 @@ namespace  mw {
       stringstream ss;
       ss << in_file;
       ifstream ifs {ss.str()};
-      return readlines(ifs);
+      istream& is   = ifs;
+      return readlines(is);
   }
 
 

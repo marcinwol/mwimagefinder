@@ -65,10 +65,10 @@ namespace mw {
 
     this->properties["format"] = core_image->magick;
 
-    (void) GetImageProperty(core_image,"exif:*");
-    (void) GetImageProperty(core_image,"icc:*");
-    (void) GetImageProperty(core_image,"iptc:*");
-    (void) GetImageProperty(core_image,"xmp:*");
+    (void) GetImageProperty(core_image,"exif:*", nullptr);
+    (void) GetImageProperty(core_image,"icc:*", nullptr);
+    (void) GetImageProperty(core_image,"iptc:*", nullptr);
+    (void) GetImageProperty(core_image,"xmp:*", nullptr);
 
     ResetImagePropertyIterator(core_image);
     property=GetNextImageProperty(core_image);
@@ -77,7 +77,7 @@ namespace mw {
       {
           while (property != (const char *) NULL)
             {
-              value = GetImageProperty(core_image, property);
+              value = GetImageProperty(core_image, property, nullptr);
               this->properties[property] =  value;
               property = GetNextImageProperty(core_image);
             }
@@ -99,7 +99,7 @@ namespace mw {
           // if not DICOM dont do anything special. Just convert
           // normal density into pixel spacing.
 
-          Magick::Geometry DPI = this->density();
+          Magick::Geometry DPI = this->geometry();
 
           ps_x = DPI.width()  > 0.0 ? 25.4 / DPI.width()   : 0.0;
           ps_y = DPI.height() > 0.0 ? 25.4 / DPI.height()  : 0.0;
@@ -161,7 +161,7 @@ namespace mw {
         // so not surprise. If so, use density information (DPI)
         // and calcate pixel spacing.
 
-        Magick::Geometry DPI = this->density();
+        Magick::Geometry DPI = this->geometry();
 
         ps_x = DPI.width()  > 0.0 ? 25.4 / DPI.width()   : 0.0;
         ps_y = DPI.height() > 0.0 ? 25.4 / DPI.height()  : 0.0;
@@ -275,7 +275,7 @@ namespace mw {
 
    pair<bool, string> MwImage::is_image(const path & img_path_)
    {
-        Signature empty_signature;
+        mw::Signature empty_signature;
         bool is_image = mw::is_image(img_path_.string(), &empty_signature);
         return make_pair(is_image, empty_signature.str());
    }

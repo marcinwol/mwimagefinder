@@ -8,13 +8,15 @@
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include "../ext/format.h"
 
-#include "utils.h"
-#include "imagefinderoptions.h"
-#include "mwimage.h"
-#include "mwpath.h"
-#include "csv/mwcsv.h"
+#include "ext/ostream.h"
+#include "ext/format.h"
+
+#include "src/utils.h"
+#include "src/imagefinderoptions.h"
+#include "src/mwimage.h"
+#include "src/mwpath.h"
+#include "src/mwcsv.h"
 
 
 
