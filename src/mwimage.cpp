@@ -74,8 +74,8 @@ namespace mw {
     property=GetNextImageProperty(core_image);
 
 
-    this->properties["width"] = std::to_string(this->columns());
-    this->properties["height"] = std::to_string(this->rows());
+    this->properties["Width[px]"] = std::to_string(this->columns());
+    this->properties["Height[px]"] = std::to_string(this->rows());
 
     if (property != (const char *) NULL)
       {
