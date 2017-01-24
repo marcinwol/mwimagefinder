@@ -5,7 +5,7 @@
 namespace mw {
 
 
-  mwcsv_writer::mwcsv_writer(ofstream & of_, const char *delim_)
+  mwcsv_writer::mwcsv_writer(std::ofstream & of_, const char * delim_)
     :of (of_), delim {delim_}
   {
     //cout <<"mwcsv_writer constructor"<< endl;
@@ -33,13 +33,6 @@ namespace mw {
 
   }
 
-
-
-  mwcsv_reader::mwcsv_reader(ifstream & ifs_, const char *delim_)
-    :ifs (ifs_), delim {delim_}
-  {
-
-  }
 
   void mwcsv_reader::readlines()
   {

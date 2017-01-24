@@ -123,7 +123,7 @@ int main(int ac, char* av[])
 
 
     // save results to the output csv file
-    ofstream of;
+    std::ofstream of;
     unique_ptr<mw::mwcsv_writer> f_uptr;
     vector<string> header;
 
@@ -288,6 +288,8 @@ int main(int ac, char* av[])
 
               const mw::MwResolution res = img_ptr->getResolution();
 
+
+
               a_line[6] = to_string(res.getPS()[0]);
               a_line[7] = to_string(res.getPS()[1]);
               a_line[8] = to_string(res.getDPI()[0]);
@@ -430,7 +432,7 @@ int main(int ac, char* av[])
 
         path tmp_file = temp_directory_path() / unique_path();
 
-        ofstream new_csv  {tmp_file.string()};
+        std::ofstream new_csv  {tmp_file.string()};
 
         mw::mwcsv_writer f2 {new_csv};
 

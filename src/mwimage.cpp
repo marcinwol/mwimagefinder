@@ -73,6 +73,10 @@ namespace mw {
     ResetImagePropertyIterator(core_image);
     property=GetNextImageProperty(core_image);
 
+
+    this->properties["width"] = std::to_string(this->columns());
+    this->properties["height"] = std::to_string(this->rows());
+
     if (property != (const char *) NULL)
       {
           while (property != (const char *) NULL)
@@ -83,17 +87,24 @@ namespace mw {
             }
 
       }
-
-    // finally calculate pixel spacfing
-    calcResolution();
-
+    try
+    {
+        // finally calculate pixel spacfing
+        calcResolution();
+    }
+    catch(Magick::Exception &error_)
+    {
+        cerr << "calcResolution(): " << error_.what() << endl;
+    }
   }
+
+
+
 
   void MwImage::calcResolution() {
 
       double ps_x = 0.0;
       double ps_y = 0.0;
-
 
       if (!isDCM()) {
           // if not DICOM dont do anything special. Just convert
@@ -108,6 +119,7 @@ namespace mw {
           return;
 
       }
+
 
     // to store potential dcm properties for pixelSpacing
     vector<properties_map::value_type> found_properties;
@@ -203,9 +215,13 @@ namespace mw {
        return is_any_type(good_types);
   }
 
+  array<size_t, 2> MwImage::get_wh() const
+  {
+      return {this->columns(), this->rows()};
+  }
 
 
-  void  MwImage::ping ( const path & image_path )
+    void  MwImage::ping ( const path & image_path )
   {
 
     this->img_path = image_path;

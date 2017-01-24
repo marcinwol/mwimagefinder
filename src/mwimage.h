@@ -87,7 +87,7 @@ namespace mw {
     bool is_any_type(const vector<string> & types) const;
     bool is_any_type(const string & types) const;
 
-
+    array<size_t, 2> get_wh() const;
 
     virtual ~MwImage();
 

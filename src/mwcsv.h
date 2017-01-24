@@ -20,7 +20,7 @@ namespace mw {
   {
   public:
     mwcsv_writer() = delete;
-    mwcsv_writer(ofstream & of_, const char * delim_ = ",");
+    mwcsv_writer(std::ofstream & of_, const char * delim_ = ",");
 
 
     template<typename T>
@@ -51,7 +51,7 @@ namespace mw {
   {
   public:
     mwcsv_reader() = delete;
-    mwcsv_reader(ifstream & of_, const char * delim_ = ",");
+    mwcsv_reader(const std::fstream& of_, const char * delim_ = ",");
 
     void readlines();
 
